@@ -1,30 +1,22 @@
-if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+ï»¿if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-var sphereSpread = 1000, sphereDetail=100, sphereMinRadius = 15, sphereMaxRadius = 150;
+var sphereSpread = 1000, sphereDetail=100, sphereMinRadius = 40, sphereMaxRadius = 150;
 var sphereDict = [];
 
-var linkSpread = 70;
-var linkColor =0xFF0000;
+var linkSpread = 100;
+var linkColor =0x29B6F6;
 
 var container;
 var camera, scene, renderer;
-var geometry;
+var geometry,color, colors = [],particles;
 var controls, clock = new THREE.Clock();
 var material, mesh, lod;
 var max = 100,count = 0;
 
 init();
 createScene();
+initParticle();
 animate();
-
-var programStroke = function ( context ) {
-
-	context.lineWidth = 0.025;
-	context.beginPath();
-	context.arc( 0, 0, 0.5, 0, PI2, true );
-	context.stroke();
-
-}
 
 function getRandomColor(){
 	return Math.random() * 0x808080 + 0x808080;
@@ -63,21 +55,36 @@ function init() {
 	
 	// CONTROLS
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
-	/*controls.movementSpeed = 1000000;
-	controls.rollSpeed = Math.PI /5;*/
 	
-	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'resize', onWindowResize, false );	
 }
 
 function createScene(){
 	var s1 = addSphere2("S1");
 	var s2 = addSphere2("S2");
-	var s3 = addSphere2("S3");
-	createLink(s1,s2,5);
-	createLink(s1,s3,2);
-	createLink(s2,s3,30);
+	createLink(s1,s2);
 }
 
+function initParticle(){
+	//THREE.ImageUtils.crossOrigin = 'anonymous';
+	sprite = THREE.ImageUtils.loadTexture("spark.jpg");
+	geometry = new THREE.Geometry();
+	for ( i = 0; i < 500; i ++ ) {
+		var vertex = new THREE.Vector3();
+		vertex.x = 2000 * Math.random() - 1000;
+		vertex.y = 2000 * Math.random() - 1000;
+		vertex.z = 2000 * Math.random() - 1000;
+		geometry.vertices.push( vertex );
+		colors[ i ] = new THREE.Color( 0xffffff );
+		colors[ i ].setHSL( ( vertex.x + 1000 ) / 2000, 1, 0.5 );
+	}
+	geometry.colors = colors;
+	material = new THREE.PointCloudMaterial( { size: 85, map: sprite, vertexColors: THREE.VertexColors, transparent: true } );
+	material.color.setHSL( 1.0, 0.2, 0.7 );
+	particles = new THREE.PointCloud( geometry, material );
+	particles.sortParticles = true;
+	scene.add( particles );
+}
 function createLink(s1,s2,n){
 	if(n==null)
 		n=1;
@@ -96,20 +103,23 @@ function createLink(s1,s2,n){
 		}
 		material = new THREE.LineBasicMaterial( { color: linkColor, linewidth: 2 } );
 		line = new THREE.Line(geometry, material);
-		scene.add(line);	
+		scene.add(line);			
 	}
 }
 
-function addSphere2(name){
+function addSphere2(name,x,y,z){
 	if(count < max){
-		//Géométrie des sources de données
+		if(x==null&&y==null&&z==null){			
+			x = sphereSpread * ( 0.5 - Math.random() );
+			y = sphereSpread * ( 0.5 - Math.random() );
+			z = sphereSpread * ( 0.5 - Math.random() );
+		}
+	
+		//GÃ©omÃ©trie des sources de donnÃ©es
 		radius = getRandom(sphereMinRadius,sphereMaxRadius);
 		geometry = new THREE.SphereGeometry( radius, sphereDetail, sphereDetail );
 		material = new THREE.MeshBasicMaterial( { color: getRandomColor() } );
 		var cube = new THREE.Mesh( geometry, material );
-		var x = sphereSpread * ( 0.5 - Math.random() );
-		var y = 0.25*sphereSpread * ( 0.5 - Math.random() );
-		var z = sphereSpread * ( 0.5 - Math.random() );
 		cube.position.x = x;
 		cube.position.y = y;
 		cube.position.z = z;
@@ -136,7 +146,7 @@ function animate() {
 
 	requestAnimationFrame( animate );
 	render();
-
+	update();
 }
 
 function render() {
@@ -155,4 +165,21 @@ function render() {
 
 	renderer.render( scene, camera );
 
+}
+
+function update(){
+	// add some rotation to the system
+	  particles.rotation.y += 0.0001;
+
+	// draw
+	renderer.render(scene, camera);
+
+	/*var t0 = clock.getElapsedTime();
+	uniforms.time.value = 0.125 * t0;
+	
+	for( var v = 0; v < particleGeometry.vertices.length; v++ ) 
+	{
+		var timeOffset = uniforms.time.value + attributes.customOffset.value[ v ];
+		particleGeometry.vertices[v] = position(timeOffset);		
+	}*/
 }
