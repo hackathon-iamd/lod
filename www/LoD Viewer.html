@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - level-of-details</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				background:#000;
+				color:#fff;
+				padding:0;
+				margin:0;
+				font-weight: bold;
+				overflow:hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family: Monospace;
+				font-size: 13px;
+				text-align: center;
+				z-index:100;
+			}
+
+			a { color:red }
+
+		</style>
+	</head>
+
+	<body>
+		<div id="info">
+			League of Data - Viewer
+		</div>
+
+
+		<script src="three.js-master/build/three.min.js"></script>
+	
+		<script src="three.js-master/examples/js/controls/OrbitControls.js"></script>
+
+		<script src="three.js-master/examples/js/Detector.js"></script>
+		<script src="three.js-master/examples/js/libs/stats.min.js"></script>
+		<script src="three.js-master/src/extras/core/Curve.js"></script>
+
+		<script src="LoD.js"></script>
+
+	</body>
+</html>
