@@ -103,7 +103,7 @@ function init() {
 	//gui.add( parameters,'a').name("Reset view");
 	gui.add( parameters,'b').name("Show/Hide stars");
 	gui.add( parameters,'c').name("Show/Hide sky");
-	gui.close();
+	//gui.close();
 }
 
 function createScene(){
