@@ -8,12 +8,16 @@ var sphereDict = [];
 var linkSpread = 100;
 var linkColor =0x29B6F6;
 var linkSubSegments = 60;
+//ETOILES
+var starCount = 500;
+var starSize = 50;
+var starSpread = 3000;
 
 var max = 100,count = 0;
 
 //var container;
 var camera, scene, renderer;
-var geometry,color, colors = [],particles;
+var geometry,color, colors = [],particles,skyBox;
 var controls, clock = new THREE.Clock();
 var material, mesh, lod;
 var projector, mouse = { x: 0, y: 0 }, INTERSECTED = null;
@@ -25,6 +29,8 @@ animate();
 
 function getRandomColor(){
 	return Math.random() * 0x808080 + 0x808080;
+	/*var min = 256/3,max = 256/3*2;
+	return new THREE.Color('rgb('+getRandom(min,max)+','+getRandom(min,max)+','+getRandom(min,max)+')');*/
 }
 
 function getRandom(min,max)
@@ -81,16 +87,29 @@ function init() {
 
 	skyBox = new THREE.Mesh(geometry, material);
 	skyBox.scale.set(-1, 1, 1);
-	skyBox.eulerOrder = 'XZY';
+	//skyBox.eulerOrder = 'XZY';
+	skyBox.rotation.order = 'XZY';
 	skyBox.renderDepth = 1000.0;
-	scene.add(skyBox);
+	scene.add(skyBox);	
 	
+	//GUI	
+	var gui = new dat.GUI();	
+	
+	var parameters={
+		a: function(){ alert("Hello!") },
+		b: function(){ particles.visible = !particles.visible},
+		c: function(){ skyBox.visible = !skyBox.visible}
+	};
+	//gui.add( parameters,'a').name("Reset view");
+	gui.add( parameters,'b').name("Show/Hide stars");
+	gui.add( parameters,'c').name("Show/Hide sky");
+	gui.close();
 }
 
 function createScene(){
 	var s1 = addSphere2("DB Pedia");	
 	var s2 = addSphere2("Drugbank");
-	var s3 = addSphere2("OK Tamer");
+	var s3 = addSphere2("TNpedia");
 	createLink(s1,s2,6);
 	createLink(s1,s3,3);
 	createLink(s3,s2,10);
@@ -99,18 +118,18 @@ function createScene(){
 function initStars(){
 	sprite = THREE.ImageUtils.loadTexture("whitePart.png");
 	geometry = new THREE.Geometry();
-	for ( i = 0; i < 500; i ++ ) {
+	for ( i = 0; i < starCount; i ++ ) {
 		var vertex = new THREE.Vector3();
-		vertex.x = 2000 * Math.random() - 1000;
-		vertex.y = 2000 * Math.random() - 1000;
-		vertex.z = 2000 * Math.random() - 1000;
+		vertex.x = starSpread * Math.random() - starSpread/2;
+		vertex.y = starSpread * Math.random() - starSpread/2;
+		vertex.z = starSpread * Math.random() - starSpread/2;
 		geometry.vertices.push( vertex );
 		colors[ i ] = new THREE.Color( 0xFFFFFF );
 		//colors[ i ].setHSL( ( vertex.x + 1000 ) / 2000, 1, 0.5 );
 		colors[ i ].setHSL( 1, 1, 1 );
 	}
 	geometry.colors = colors;
-	material = new THREE.PointCloudMaterial( { size: 50, map: sprite, vertexColors: THREE.VertexColors, transparent: true } );
+	material = new THREE.PointCloudMaterial( { size: starSize, map: sprite, vertexColors: THREE.VertexColors, transparent: true } );
 	//material.color.setHSL( 0.8, 1, 0.5 );
 	particles = new THREE.PointCloud( geometry, material );
 	particles.sortParticles = true;
@@ -323,7 +342,7 @@ function raycastUpdate(){
 	// create a Ray with origin at the mouse position
 	//   and direction into the scene (camera direction)
 	var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
-	projector.unprojectVector( vector, camera );
+	vector.unproject(camera);
 	var ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
 
 	// create an array containing all objects in the scene with which the ray intersects
