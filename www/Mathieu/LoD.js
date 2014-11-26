@@ -214,15 +214,20 @@ function addSphere2(name,x,y,z){
 	
 		//Géométrie des sources de données
 		radius = getRandom(sphereMinRadius,sphereMaxRadius);
+		color = getRandomColor();
 		geometry = new THREE.SphereGeometry( radius, sphereDetail, sphereDetail );
-		material = new THREE.MeshLambertMaterial( { color: getRandomColor() } );
+		material = new THREE.MeshLambertMaterial( { color: color } );
 		//material = new THREE.MeshBasicMaterial( { color: getRandomColor() } );
 		var sphere = new THREE.Mesh( geometry, material );
-		sphere.position.x = x;
-		sphere.position.y = y;
-		sphere.position.z = z;
+		sphere.position.copy(new THREE.Vector3(x,y,z));
 		sphere.updateMatrix();
 		sphere.matrixAutoUpdate = false;
+		
+		var outlineMaterial1 = new THREE.MeshBasicMaterial( { color: color, side: THREE.BackSide } );
+		var outlineMesh1 = new THREE.Mesh( geometry, outlineMaterial1 );
+		outlineMesh1.position.copy(sphere.position);
+		outlineMesh1.scale.multiplyScalar(1.05);
+		scene.add( outlineMesh1 );		
 		
 		var label = makeTextSprite( " "+name+" ", { fontsize: 40, backgroundColor: {r:255, g:255, b:255, a:1} } );
 		label.position.x = x+50;
@@ -230,7 +235,7 @@ function addSphere2(name,x,y,z){
 		label.position.z = z+50;
 		scene.add( label );	
 			
-		var source = {x:x,y:y,z:z,sphere:sphere,radius:radius,label:label};
+		var source = {x:x,y:y,z:z,sphere:sphere,radius:radius,label:label,outline:outlineMesh1};
 		sphereDict.push(source);
 		scene.add( sphere );
 		count++;
@@ -263,17 +268,20 @@ function render() {
 }
 
 function update(){
+	// pour chaque sphere
 	for(i=0;i<sphereDict.length;i++){
-		var sPos = sphereDict[i].sphere.position;
-		var cPos = camera.position;
-		var dist = sPos.distanceTo(cPos);
-		var distLabel = (sphereDict[i].radius+30)/dist;
-		var dist3 = cPos.clone();
-		dist3.sub(sPos).multiplyScalar(distLabel);
-		var lPos = sPos.clone();
-		lPos.add(dist3);
-
-
+		//position de la caméra
+		var sPos3 = sphereDict[i].sphere.position;
+		//position de la sphere
+		var cPos3 = camera.position;
+		//distance entre la sphere et la camera
+		var dist = sPos3.distanceTo(cPos3);
+		//échelle de distance entre sphere-label et sphere-camera
+		var percentDistLabel = (sphereDict[i].radius+30)/dist;
+		//vecteur différence entre position label et position sphere
+		var dist3 = cPos3.clone().sub(sPos3).multiplyScalar(percentDistLabel);
+		//position du label
+		var lPos = sPos3.clone().add(dist3);
 		sphereDict[i].label.position.copy(lPos);
 	}
 }
