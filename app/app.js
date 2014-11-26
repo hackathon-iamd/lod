@@ -12,6 +12,8 @@ var orient = require('orientdb'),
     Db = orient.Db,
     Server = orient.Server;
 
+var processor = require(__dirmane + '/processor.js');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -74,7 +76,14 @@ io.on('connection', function(socket){
             ts = null;
         });
     });
+    socket.on('source', function(data){
+        data = JSON.parse(data);
+        process.emit('source', data, function () {
+            
+        });
+    });
 });
+
 
 db.open(function(err) {
 
