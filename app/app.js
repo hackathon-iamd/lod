@@ -8,7 +8,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var fs = fs = require('fs');
-var orientdb = require('orientdb'),
+var orient = require('orientdb'),
     Db = orient.Db,
     Server = orient.Server;
 
@@ -35,21 +35,46 @@ app.use(function(req, res, next) {
     });
 });
 
-io.on('connection', function(socket){
 
-
-    socket.emit('graph', '{ "sources": [{"id": "11:0", "name": "a", "types": ["12:0", "12:1"] }], "types": [{ "id": "12:0", "name": "b" }, { "id": "12:1", "name": "c" }] }');
-});
-
-
-var dbConfig = require('config.js')
+var dbConfig = require(__dirname + '/config.js')
 var serverConfig = {
-    host: "localhost",
+    host: '193.50.40.95',
     port: 2424
 };
 
 var server = new Server(serverConfig);
-var db = new Db("temp", server, dbConfig);
+var db = new Db('LoD', server, dbConfig);
+
+io.on('connection', function(socket){
+    db.command("select from Type", function (err, types) {
+        if (err) {
+            throw err;
+        }
+
+        var ts = [];
+
+        for (var i in types) {
+            ts.push({id: types[i]['@rid'], name: types[i]['name']});
+        }
+
+        db.command("select from (select name, out('Contains') from Source)", function(err, sources) {
+            if (err) {
+                throw err;
+            }
+
+            ss = [];
+            for (i in sources) {
+                ss.push({ id: sources[i]['@rid'], name: sources[i]['name'], types: sources[i]['out'] })
+            }
+            
+
+            graph = { sources: ss, types: ts }
+            socket.emit('graph', JSON.stringify(graph));
+            ss = null;
+            ts = null;
+        });
+    });
+});
 
 db.open(function(err) {
 
@@ -60,8 +85,7 @@ db.open(function(err) {
 
     console.log("Database '" + db.databaseName + "' has " + db.clusters.length + " clusters");
 
-    // use db.command(...) function to run OrientDB SQL queries
-});
-http.listen(3000, function(){
-    console.log('listening on *:3000');
+    http.listen(3000, function(){
+        console.log('listening on *:3000');
+    });
 });
