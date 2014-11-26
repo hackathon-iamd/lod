@@ -12,6 +12,8 @@ var orient = require('orientdb'),
     Db = orient.Db,
     Server = orient.Server;
 
+var processor = require(__dirmane + '/processor.js');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -76,11 +78,8 @@ io.on('connection', function(socket){
     });
     socket.on('source', function(data){
         data = JSON.parse(data);
-        db.command("insert into Source set name = '" + data.name + "', url = '" + data.url + "', npoint = '" + data.npoint + "'", function(err) {
-            if (err) {
-                throw err;
-            }
-            //io.emit('sourceCreation');
+        process.emit('source', data, function () {
+            
         });
     });
 });
