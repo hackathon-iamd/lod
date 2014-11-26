@@ -49,6 +49,7 @@
         <script src="js/SkyShader.js"></script>
 
         <script src="js/BalancedNode.js"></script>
+        <script src="js/Arc.js"></script>
         <script src="js/Detector.js"></script>
         <script src="js/stats.min.js"></script>
         <script src="js/dat.gui.min.js"></script>
@@ -73,8 +74,10 @@
 
             var geometry;
             var material, mesh, lod;
-            var max = 100,count = 0;
 
+            //tab for nodes ForceLoop
+            var sourceNodes = [];
+            var arcs = [];
             init();
             animate();
 
@@ -158,10 +161,11 @@
             {
                 return Math.floor(Math.random()*(max-min+1)+min);
             }
+
             function init() {
 
                 camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.5, 2000000 );
-                camera.position.z = 2000;
+                camera.position.z = 200;
 
                 camera.position.y = 100;
                 camera.setLens(20);
@@ -208,11 +212,11 @@
             }
 
             function createScene(){
-                var s1 = addSphere2("S1");
-                var s2 = addSphere2("S2");
-                var s3 = addSphere2("S3");
-                var s4 = addSphere2("S4");
-                var s5 = addSphere2("S5");
+                var s1 = makeSourceNode("S1");
+                var s2 = makeSourceNode("S2");
+                var s3 = makeSourceNode("S3");
+                var s4 = makeSourceNode("S4");
+                var s5 = makeSourceNode("S5");
                 createLink(s1,s2,5);
                 createLink(s1,s3,2);
                 createLink(s2,s3,30);
@@ -225,19 +229,18 @@
                 if(n==null)
                     n=1;
                 for(i=0;i<n;i++){
-                    var link = new THREE.Shape();
-                    SUBDIVISIONS = 20;
+                   /* SUBDIVISIONS = 20;
                     geometry = new THREE.Geometry();
                     curve = new THREE.QuadraticBezierCurve3();
-                    curve.v0 = new THREE.Vector3(s1.x, s1.y, s1.z);//pt1
-                    curve.v1 = new THREE.Vector3((s1.x+s2.x)/2+linkSpread*Math.random(), 
-                                                 (s1.y+s2.y)/2+linkSpread*Math.random(), 
-                                                 (s1.z+s2.z)/2+linkSpread*Math.random());//pt2
-                    curve.v2 = new THREE.Vector3(s2.x, s2.y, s2.z);//pt3
+                    curve.v0 = new THREE.Vector3(s1.position.x, s1.position.y, s1.position.z);//pt1
+                    curve.v1 = new THREE.Vector3((s1.position.x+s2.position.x)/2+linkSpread*Math.random(), 
+                                                 (s1.position.y+s2.position.y)/2+linkSpread*Math.random(), 
+                                                 (s1.position.z+s2.position.z)/2+linkSpread*Math.random());//pt2
+                    curve.v2 = new THREE.Vector3(s2.position.x, s2.position.y, s2.position.z);//pt3
                     for (j = 0; j < SUBDIVISIONS; j++) {
-                        geometry.vertices.push( curve.getPoint(j / SUBDIVISIONS) )
+                        geometry.vertices.push( curve.getPoint(j / SUBDIVISIONS) );
                     }
-                    //material = new THREE.LineBasicMaterial( { color: 0x0099ff, linewidth: 2 } );
+                    material = new THREE.LineBasicMaterial( { color: 0x0099ff, linewidth: 2 } );
 
                     material = new THREE.MeshBasicMaterial({
                         transparent: true,
@@ -247,32 +250,54 @@
                         blending: THREE.AdditiveBlending
                     });
 
-                    line = new THREE.Line(geometry, material);
+                    line = new THREE.Line(geometry, material);*/
+                    material = new THREE.MeshBasicMaterial({
+                        transparent: true,
+                        opacity: 0.2,
+                        depthTest: false,
+                        color: 0x0088ff,
+                        blending: THREE.AdditiveBlending
+                    });
+                    var line = new Arc(s1,s2,"Type"+i,material);
+                    //line.needsUpdate(true);
+                    arcs.push(line);
                     scene.add(line);	
                 }
             }
 
-            function addSphere2(name){
-                if(count < max){
-                    //G갭굲ie des sources de donn꦳
-                    radius = getRandom(sphereMinRadius,sphereMaxRadius);
-                    geometry = new THREE.SphereGeometry( radius, sphereDetail, sphereDetail );
-                    material = new THREE.MeshBasicMaterial( { color: getRandomColor() } );
-                    var cube = new BalancedNode( geometry, material );
-                    var x = sphereSpread * ( 0.5 - Math.random() );
-                    var y = 0.25*sphereSpread * ( 0.5 - Math.random() );
-                    var z = sphereSpread * ( 0.5 - Math.random() );
-                    cube.position.x = x;
-                    cube.position.y = y;
-                    cube.position.z = z;
-                    cube.updateMatrix();
-                    cube.matrixAutoUpdate = false;
-                    var source = {x:x,y:y,z:z,value:cube,radius:radius};
-                    sphereDict[name]= source
-                    scene.add( cube );
-                    count++;
-                    return source;
-                }
+            function makeSourceNode(name){
+
+                radius = getRandom(sphereMinRadius,sphereMaxRadius);
+                geometry = new THREE.SphereGeometry( 10, sphereDetail, sphereDetail );
+                material = new THREE.MeshBasicMaterial( { color: getRandomColor() } );
+                var node = new BalancedNode( geometry, material );
+                /*var x = sphereSpread * ( 0.5 - Math.random() );
+                var y = 0.25*sphereSpread * ( 0.5 - Math.random() );
+                var z = sphereSpread * ( 0.5 - Math.random() );
+                node.position.x = x;
+                node.position.y = y;
+                node.position.z = z;*/
+
+                //var source = {x:x,y:y,z:z,value:cube,radius:radius};
+                //sphereDict[name]= source
+
+                node.position.set(0,1,100); 
+                node.velocity.set(1,0,0);
+                node.velocity.rotateZ(Math.random()*90);			
+                node.velocity.rotateY(Math.random()*360);
+
+                node.position.rotateZ(Math.random()*360); 
+
+                node.drag = 0.96;
+
+                //node.updateMatrix();
+                //node.matrixAutoUpdate = false;
+                node.name = name;
+
+                sourceNodes.push(node);
+
+                scene.add( node );
+                return node;
             }
 
             function onWindowResize() {
@@ -286,11 +311,73 @@
 
             }
 
+
             var time = 0;
 
             function animate() {
 
                 time = Date.now();
+
+                //Uniform nodes
+                var repelforce = new THREE.Vector3(0,0,0),
+                    mag, 
+                    repelstrength; 
+
+                for (i=0; i<sourceNodes.length; i++){
+                    var p1 = sourceNodes[i]; 
+
+                    repelforce.copy(p1.position);
+
+                    mag = repelforce.length(); 
+
+                    repelstrength = (mag - 100) *-1; 
+
+                    if(mag>0){
+                        repelforce.multiplyScalar(repelstrength/mag);
+                        p1.position.add(repelforce); 
+                    }
+
+                    if(i>=sourceNodes.length-1) continue; 
+
+                    for(j=i+1; j<sourceNodes.length; j++) {
+                        var p2 = sourceNodes[j];
+
+                        repelforce.copy(p2.position); 
+                        repelforce.sub(p1.position); 
+                        mag = repelforce.length(); 
+                        repelstrength = 50-mag; 
+
+                        if((repelstrength>0)&&(mag>0))	{
+
+                            repelforce.multiplyScalar(repelstrength*0.0035 / mag); 
+
+                            p1.force.sub(repelforce); 
+                            p2.force.add(repelforce); 
+
+                        }
+                    }
+
+
+                }
+
+
+                // iteratate through each particle
+                for (i=0; i<sourceNodes.length; i++){
+                    var sourceNode = sourceNodes[i]; 
+
+                    sourceNode.update();
+
+                }
+
+                 // iteratate through each arc
+                for (i=0; i<arcs.length; i++){
+                    var arc = arcs[i]; 
+
+                    arc.update();
+
+                }
+                
+                //end uniform nodes
 
                 requestAnimationFrame( animate );
 
