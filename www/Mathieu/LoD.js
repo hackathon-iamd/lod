@@ -39,11 +39,11 @@ function init() {
 	scene.fog = new THREE.Fog( 0x000000, 1, 15000 );
 	scene.autoUpdate = false;
 	//LIGHT
-	/*var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+	var light = new THREE.AmbientLight( 0x333333 );
 	scene.add( light );
-	var light2 = new THREE.DirectionalLight( 0x404040 );
+	var light2 = new THREE.DirectionalLight( 0xFFFFFF );
 	light2.position.set( 0, 0, 1 ).normalize();
-	scene.add( light2 );*/
+	scene.add( light2 );
 
 	//RENDERER
 	renderer = new THREE.WebGLRenderer();
@@ -215,7 +215,8 @@ function addSphere2(name,x,y,z){
 		//Géométrie des sources de données
 		radius = getRandom(sphereMinRadius,sphereMaxRadius);
 		geometry = new THREE.SphereGeometry( radius, sphereDetail, sphereDetail );
-		material = new THREE.MeshBasicMaterial( { color: getRandomColor() } );
+		material = new THREE.MeshLambertMaterial( { color: getRandomColor() } );
+		//material = new THREE.MeshBasicMaterial( { color: getRandomColor() } );
 		var sphere = new THREE.Mesh( geometry, material );
 		sphere.position.x = x;
 		sphere.position.y = y;
