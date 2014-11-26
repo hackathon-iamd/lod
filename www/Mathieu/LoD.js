@@ -21,6 +21,8 @@ var geometry,color, colors = [],particles,skyBox;
 var controls, clock = new THREE.Clock();
 var material, mesh, lod;
 var projector, mouse = { x: 0, y: 0 }, INTERSECTED = null;
+var keyboard = new THREEx.KeyboardState();
+var seq=0;
 
 init();
 createScene();
@@ -71,6 +73,7 @@ function init() {
 	
 	// when the mouse moves, call the given function
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );	
+	document.addEventListener( 'click', onDocumentMouseClick, false );	
 	window.addEventListener( 'resize', onWindowResize, false );	
 	
 	//SKY
@@ -254,6 +257,7 @@ function addSphere2(name,x,y,z){
 		//material = new THREE.MeshBasicMaterial( { color: getRandomColor() } );
 		var sphere = new THREE.Mesh( geometry, material );
 		sphere.tag = "source";
+		sphere.radius = radius;
 		sphere.position.copy(new THREE.Vector3(x,y,z));
 		sphere.updateMatrix();
 		sphere.matrixAutoUpdate = false;
@@ -306,6 +310,7 @@ function render() {
 }
 
 function update(){
+	
 	// pour chaque sphere
 	for(i=0;i<sphereDict.length;i++){
 		//position de la caméra
@@ -367,8 +372,8 @@ function raycastUpdate(){
 					INTERSECTED = intersects[ i ].object;
 					//on affiche le contour de l'objet choisi
 					INTERSECTED.outline.visible = true;
-					break;
 				}
+				break;
 			}
 		}
 	} 
@@ -380,5 +385,19 @@ function raycastUpdate(){
 		// remove previous intersection object reference
 		//     by setting current intersection object to "nothing"
 		INTERSECTED = null;
+	}
+}
+
+function onDocumentMouseClick(){
+	if(INTERSECTED){
+		//position de la camera
+		var cPos3 = camera.position;
+		//position de la sphere
+		var sPos3 = INTERSECTED.position;
+		//distance entre la sphere et la camera
+		var dist = sPos3.distanceTo(cPos3);
+		var movingDistance = dist - INTERSECTED.radius - 100;
+		camera.translateZ( -movingDistance );
+		controls.target.set(INTERSECTED.position.x,INTERSECTED.position.y,INTERSECTED.position.z);
 	}
 }
