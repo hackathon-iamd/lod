@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>League of Data</title>
+
+        <link rel="stylesheet" href="/stylesheets/style.css">
+
+        <script src="/javascripts/sockets.io.js"></script>
+
+        <script>
+            var socket = io();
+
+            socket.on('graph', function (graph) {
+                console.log(JSON.parse(graph))
+            });
+
+            socket.on('source', function (graph) {
+
+            });
+        </script>
+    </head>
+
+    <body>
+
+    </body>
+</html>
