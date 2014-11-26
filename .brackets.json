@@ -1,0 +1,13 @@
+{
+    "jscodehints.detectedExclusions": [
+        "D:/lod/www/three.js-master/examples/js/curves/NURBSCurve.js",
+        "D:/lod/www/three.js-master/editor/js/libs/codemirror/codemirror.js",
+        "D:/lod/www/three.js-master/examples/js/controls/VRControls.js",
+        "D:/lod/www/three.js-master/examples/js/crossfade/gui.js",
+        "D:/lod/www/three.js-master/examples/js/crossfade/scenes.js",
+        "D:/lod/www/three.js-master/editor/js/libs/codemirror/../lib/codemirror.js",
+        "D:/lod/www/Alexandre/ShaderSky/js/BalancedNode.js",
+        "D:/lod/www/three.js-master/examples/js/controls/EditorControls.js",
+        "D:/lod/www/three.js-master/examples/js/controls/FirstPersonControls.js"
+    ]
+}

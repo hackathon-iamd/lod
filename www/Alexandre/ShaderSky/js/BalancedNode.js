@@ -1,11 +1,11 @@
-BalancedNode= function(geometry, material) {
+BalancedNode = function(geometry, material) {
   THREE.Mesh.call(this,geometry,material);
   this.velocity=new THREE.Vector3(0,0,0);
   this.force=new THREE.Vector3(0,0,0); 
   this.drag=1;
 };
 
-BalancedNode.prototype = Object.create(THREE.Mesh.prototype);
+//BalancedNode.prototype = Object.create(THREE.Mesh.prototype);
 
 BalancedNode.prototype=new THREE.Mesh();
 
