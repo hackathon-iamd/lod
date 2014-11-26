@@ -15,7 +15,7 @@ var max = 100,count = 0;
 
 init();
 createScene();
-initStars();
+//initStars();
 animate();
 
 function getRandomColor(){
@@ -28,40 +28,41 @@ function getRandom(min,max)
 }
 
 function init() {
-
+	//DOC
 	container = document.createElement( 'div' );
 	document.body.appendChild( container );
-
+	//CAMERA
 	camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 15000 );
 	camera.position.z = 1000;
-
-
+	//SCENE
 	scene = new THREE.Scene();
 	scene.fog = new THREE.Fog( 0x000000, 1, 15000 );
 	scene.autoUpdate = false;
-	
+	//LIGHT
 	var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 	scene.add( light );
-
 	var light = new THREE.DirectionalLight( 0xffffff );
 	light.position.set( 0, 0, 1 ).normalize();
 	scene.add( light );
 
-
+	//RENDERER
 	renderer = new THREE.WebGLRenderer();
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	renderer.sortObjects = false;
 	container.appendChild( renderer.domElement );
 	
 	// CONTROLS
-	controls = new THREE.OrbitControls( camera, renderer.domElement );
+	//controls = new THREE.OrbitControls( camera, renderer.domElement );
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
 	
 	window.addEventListener( 'resize', onWindowResize, false );	
+	
+	
 }
 
 function createScene(){
-	var s1 = addSphere2("S1");
-	var s2 = addSphere2("S2");
+	var s1 = addSphere2("DB Pedia");	
+	var s2 = addSphere2("Drugbank");
 	createLink(s1,s2);
 }
 
@@ -107,6 +108,85 @@ function createLink(s1,s2,n){
 	}
 }
 
+function makeTextSprite( message, parameters )
+{
+	if ( parameters === undefined ) parameters = {};
+	
+	var fontface = parameters.hasOwnProperty("fontface") ? 
+		parameters["fontface"] : "Arial";
+	
+	var fontsize = parameters.hasOwnProperty("fontsize") ? 
+		parameters["fontsize"] : 18;
+	
+	var borderThickness = parameters.hasOwnProperty("borderThickness") ? 
+		parameters["borderThickness"] : 4;
+	
+	var borderColor = parameters.hasOwnProperty("borderColor") ?
+		parameters["borderColor"] : { r:0, g:0, b:0, a:1.0 };
+	
+	var backgroundColor = parameters.hasOwnProperty("backgroundColor") ?
+		parameters["backgroundColor"] : { r:255, g:255, b:255, a:1.0 };
+
+	//var spriteAlignment = parameters.hasOwnProperty("alignment") ?
+	//	parameters["alignment"] : THREE.SpriteAlignment.topLeft;
+
+	//var spriteAlignment = THREE.SpriteAlignment.topLeft;
+		
+
+	var canvas = document.createElement('canvas');
+	var context = canvas.getContext('2d');
+	context.font = "Bold " + fontsize + "px " + fontface;
+    
+	// get size data (height depends only on font size)
+	var metrics = context.measureText( message );
+	var textWidth = metrics.width;
+	
+	// background color
+	context.fillStyle   = "rgba(" + backgroundColor.r + "," + backgroundColor.g + ","
+								  + backgroundColor.b + "," + backgroundColor.a + ")";
+	// border color
+	context.strokeStyle = "rgba(" + borderColor.r + "," + borderColor.g + ","
+								  + borderColor.b + "," + borderColor.a + ")";
+
+	context.lineWidth = borderThickness;
+	roundRect(context, borderThickness/2, borderThickness/2, textWidth + borderThickness, fontsize * 1.4 + borderThickness, 6);
+	// 1.4 is extra height factor for text below baseline: g,j,p,q.
+	
+	// text color
+	context.fillStyle = "rgba(0, 0, 0, 1.0)";
+
+	context.fillText( message, borderThickness, fontsize + borderThickness);
+	
+	// canvas contents will be used for a texture
+	var texture = new THREE.Texture(canvas) 
+	texture.needsUpdate = true;
+
+	var spriteMaterial = new THREE.SpriteMaterial( 
+		{ map: texture, useScreenCoordinates: false/*, alignment: spriteAlignment */} );
+	var sprite = new THREE.Sprite( spriteMaterial );
+	sprite.scale.set(100,50,1.0);
+	return sprite;	
+}
+
+
+// function for drawing rounded rectangles
+function roundRect(ctx, x, y, w, h, r) 
+{
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.lineTo(x+w-r, y);
+    ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+    ctx.lineTo(x+w, y+h-r);
+    ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+    ctx.lineTo(x+r, y+h);
+    ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+    ctx.lineTo(x, y+r);
+    ctx.quadraticCurveTo(x, y, x+r, y);
+    ctx.closePath();
+    ctx.fill();
+	ctx.stroke();   
+}
+
 function addSphere2(name,x,y,z){
 	if(count < max){
 		if(x==null&&y==null&&z==null){			
@@ -119,64 +199,63 @@ function addSphere2(name,x,y,z){
 		radius = getRandom(sphereMinRadius,sphereMaxRadius);
 		geometry = new THREE.SphereGeometry( radius, sphereDetail, sphereDetail );
 		material = new THREE.MeshBasicMaterial( { color: getRandomColor() } );
-		var cube = new THREE.Mesh( geometry, material );
-		cube.position.x = x;
-		cube.position.y = y;
-		cube.position.z = z;
-		cube.updateMatrix();
-		cube.matrixAutoUpdate = false;
-		var source = {x:x,y:y,z:z,value:cube,radius:radius};
-		sphereDict[name]= source
-		scene.add( cube );
+		var sphere = new THREE.Mesh( geometry, material );
+		sphere.position.x = x;
+		sphere.position.y = y;
+		sphere.position.z = z;
+		sphere.updateMatrix();
+		sphere.matrixAutoUpdate = false;
+		
+		var label = makeTextSprite( " "+name+" ", { fontsize: 40, backgroundColor: {r:255, g:255, b:255, a:1} } );
+		label.position.x = x+50;
+		label.position.y = y+50;
+		label.position.z = z+50;
+		scene.add( label );	
+			
+		var source = {x:x,y:y,z:z,sphere:sphere,radius:radius,label:label};
+		sphereDict.push(source);
+		scene.add( sphere );
 		count++;
 		return source;
 	}
 }
 
 function onWindowResize() {
-
 	camera.aspect = window.innerWidth / window.innerHeight;
 	camera.updateProjectionMatrix();
 
 	renderer.setSize( window.innerWidth, window.innerHeight );
-
 }
 
 function animate() {
-
 	requestAnimationFrame( animate );
-	render();
 	update();
+	render();
 }
 
 function render() {
-
 	controls.update( clock.getDelta() );
 	scene.updateMatrixWorld();
 	scene.traverse( function ( object ) {
-
 		if ( object instanceof THREE.LOD ) {
-
 			object.update( camera );
-
 		}
-
 	} );
-
 	renderer.render( scene, camera );
-
 }
 
 function update(){
-	// add some rotation to the system
-	  //particles.rotation.y += 0.0001;
+	for(i=0;i<sphereDict.length;i++){
+		var sPos = sphereDict[i].sphere.position;
+		var cPos = camera.position;
+		var dist = sPos.distanceTo(cPos);
+		var distLabel = (sphereDict[i].radius+30)/dist;
+		var dist3 = cPos.clone();
+		dist3.sub(sPos).multiplyScalar(distLabel);
+		var lPos = sPos.clone();
+		lPos.add(dist3);
 
-	/*var t0 = clock.getElapsedTime();
-	uniforms.time.value = 0.125 * t0;
-	
-	for( var v = 0; v < particleGeometry.vertices.length; v++ ) 
-	{
-		var timeOffset = uniforms.time.value + attributes.customOffset.value[ v ];
-		particleGeometry.vertices[v] = position(timeOffset);		
-	}*/
+
+		sphereDict[i].label.position.copy(lPos);
+	}
 }
