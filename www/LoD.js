@@ -15,7 +15,7 @@ var max = 100,count = 0;
 
 init();
 createScene();
-initParticle();
+initStars();
 animate();
 
 function getRandomColor(){
@@ -65,9 +65,8 @@ function createScene(){
 	createLink(s1,s2);
 }
 
-function initParticle(){
-	//THREE.ImageUtils.crossOrigin = 'anonymous';
-	sprite = THREE.ImageUtils.loadTexture("spark.jpg");
+function initStars(){
+	sprite = THREE.ImageUtils.loadTexture("whitePart.png");
 	geometry = new THREE.Geometry();
 	for ( i = 0; i < 500; i ++ ) {
 		var vertex = new THREE.Vector3();
@@ -75,12 +74,13 @@ function initParticle(){
 		vertex.y = 2000 * Math.random() - 1000;
 		vertex.z = 2000 * Math.random() - 1000;
 		geometry.vertices.push( vertex );
-		colors[ i ] = new THREE.Color( 0xffffff );
-		colors[ i ].setHSL( ( vertex.x + 1000 ) / 2000, 1, 0.5 );
+		colors[ i ] = new THREE.Color( 0xFFFFFF );
+		//colors[ i ].setHSL( ( vertex.x + 1000 ) / 2000, 1, 0.5 );
+		colors[ i ].setHSL( 0.1, 1, 0.5 );
 	}
 	geometry.colors = colors;
-	material = new THREE.PointCloudMaterial( { size: 85, map: sprite, vertexColors: THREE.VertexColors, transparent: true } );
-	material.color.setHSL( 1.0, 0.2, 0.7 );
+	material = new THREE.PointCloudMaterial( { size: 80, map: sprite, vertexColors: THREE.VertexColors, transparent: true } );
+	//material.color.setHSL( 0.8, 1, 0.5 );
 	particles = new THREE.PointCloud( geometry, material );
 	particles.sortParticles = true;
 	scene.add( particles );
@@ -103,7 +103,7 @@ function createLink(s1,s2,n){
 		}
 		material = new THREE.LineBasicMaterial( { color: linkColor, linewidth: 2 } );
 		line = new THREE.Line(geometry, material);
-		scene.add(line);			
+		scene.add(line);	
 	}
 }
 
@@ -169,10 +169,7 @@ function render() {
 
 function update(){
 	// add some rotation to the system
-	  particles.rotation.y += 0.0001;
-
-	// draw
-	renderer.render(scene, camera);
+	  //particles.rotation.y += 0.0001;
 
 	/*var t0 = clock.getElapsedTime();
 	uniforms.time.value = 0.125 * t0;
