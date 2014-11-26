@@ -1,17 +1,22 @@
 ﻿if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
+//PARAMETRES
+//SPHERE
 var sphereSpread = 1000, sphereDetail=100, sphereMinRadius = 40, sphereMaxRadius = 150;
 var sphereDict = [];
-
+//LIENS
 var linkSpread = 100;
 var linkColor =0x29B6F6;
+var linkSubSegments = 60;
 
-var container;
+var max = 100,count = 0;
+
+//var container;
 var camera, scene, renderer;
 var geometry,color, colors = [],particles;
 var controls, clock = new THREE.Clock();
 var material, mesh, lod;
-var max = 100,count = 0;
+var projector, mouse = { x: 0, y: 0 }, INTERSECTED = null;
 
 init();
 createScene();
@@ -55,6 +60,11 @@ function init() {
 	//controls = new THREE.OrbitControls( camera, renderer.domElement );
 	controls = new THREE.TrackballControls( camera, renderer.domElement );
 	
+	// initialize object to perform world/screen calculations
+	projector = new THREE.Projector();
+	
+	// when the mouse moves, call the given function
+	document.addEventListener( 'mousemove', onDocumentMouseMove, false );	
 	window.addEventListener( 'resize', onWindowResize, false );	
 	
 	//SKY
@@ -80,7 +90,10 @@ function init() {
 function createScene(){
 	var s1 = addSphere2("DB Pedia");	
 	var s2 = addSphere2("Drugbank");
-	createLink(s1,s2);
+	var s3 = addSphere2("OK Tamer");
+	createLink(s1,s2,6);
+	createLink(s1,s3,3);
+	createLink(s3,s2,10);
 }
 
 function initStars(){
@@ -104,11 +117,13 @@ function initStars(){
 	scene.add( particles );
 }
 function createLink(s1,s2,n){
+	//si n est nul on le met a 1 pour créer un seul lien
 	if(n==null)
 		n=1;
+	//on va créer n liens
 	for(i=0;i<n;i++){
+		//création d'une forme
 		var link = new THREE.Shape();
-		SUBDIVISIONS = 20;
 		geometry = new THREE.Geometry();
 		curve = new THREE.QuadraticBezierCurve3();
 		curve.v0 = new THREE.Vector3(s1.x, s1.y, s1.z);//pt1
@@ -116,8 +131,8 @@ function createLink(s1,s2,n){
 									(s1.y+s2.y)/2+linkSpread*Math.random(), 
 									(s1.z+s2.z)/2+linkSpread*Math.random());//pt2
 		curve.v2 = new THREE.Vector3(s2.x, s2.y, s2.z);//pt3
-		for (j = 0; j < SUBDIVISIONS; j++) {
-			geometry.vertices.push( curve.getPoint(j / SUBDIVISIONS) )
+		for (j = 0; j < linkSubSegments; j++) {
+			geometry.vertices.push( curve.getPoint(j / linkSubSegments) )
 		}
 		material = new THREE.LineBasicMaterial( { color: linkColor, linewidth: 2 } );
 		line = new THREE.Line(geometry, material);
@@ -219,6 +234,7 @@ function addSphere2(name,x,y,z){
 		material = new THREE.MeshLambertMaterial( { color: color } );
 		//material = new THREE.MeshBasicMaterial( { color: getRandomColor() } );
 		var sphere = new THREE.Mesh( geometry, material );
+		sphere.tag = "source";
 		sphere.position.copy(new THREE.Vector3(x,y,z));
 		sphere.updateMatrix();
 		sphere.matrixAutoUpdate = false;
@@ -227,7 +243,9 @@ function addSphere2(name,x,y,z){
 		var outlineMesh1 = new THREE.Mesh( geometry, outlineMaterial1 );
 		outlineMesh1.position.copy(sphere.position);
 		outlineMesh1.scale.multiplyScalar(1.05);
-		scene.add( outlineMesh1 );		
+		outlineMesh1.visible = false;
+		scene.add( outlineMesh1 );	
+		sphere.outline = outlineMesh1;
 		
 		var label = makeTextSprite( " "+name+" ", { fontsize: 40, backgroundColor: {r:255, g:255, b:255, a:1} } );
 		label.position.x = x+50;
@@ -253,6 +271,7 @@ function onWindowResize() {
 function animate() {
 	requestAnimationFrame( animate );
 	update();
+	raycastUpdate();
 	render();
 }
 
@@ -283,5 +302,64 @@ function update(){
 		//position du label
 		var lPos = sPos3.clone().add(dist3);
 		sphereDict[i].label.position.copy(lPos);
+	}
+}
+
+
+function onDocumentMouseMove( event ) 
+{
+	// the following line would stop any other event handler from firing
+	// (such as the mouse's TrackballControls)
+	// event.preventDefault();
+	
+	// update the mouse variable
+	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+}
+
+function raycastUpdate(){
+	// find intersections
+
+	// create a Ray with origin at the mouse position
+	//   and direction into the scene (camera direction)
+	var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
+	projector.unprojectVector( vector, camera );
+	var ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+
+	// create an array containing all objects in the scene with which the ray intersects
+	var intersects = ray.intersectObjects( scene.children );
+
+	// INTERSECTED = the object in the scene currently closest to the camera 
+	//		and intersected by the Ray projected from the mouse position 	
+	
+	// if there is one (or more) intersections
+	if ( intersects.length > 0 )
+	{	
+		for(i=0;i<intersects.length;i++){				
+			if(intersects[i].object.type=="Mesh" && intersects[i].object.tag=="source"){
+			
+				// if the closest object intersected is not the currently stored intersection object
+				if ( intersects[ i ].object != INTERSECTED ) 
+				{
+					//on supprime le contour de l'ancien object choisi
+					if ( INTERSECTED ) 
+						INTERSECTED.outline.visible = false;
+					// on sauvegarde l'object choisi
+					INTERSECTED = intersects[ i ].object;
+					//on affiche le contour de l'objet choisi
+					INTERSECTED.outline.visible = true;
+					break;
+				}
+			}
+		}
+	} 
+	else // there are no intersections
+	{
+		//on supprime le contour de l'ancien object choisi
+		if ( INTERSECTED ) 
+			INTERSECTED.outline.visible = false;
+		// remove previous intersection object reference
+		//     by setting current intersection object to "nothing"
+		INTERSECTED = null;
 	}
 }
