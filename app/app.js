@@ -76,6 +76,7 @@ io.on('connection', function(socket){
     });
 });
 
+
 db.open(function(err) {
 
     if (err) {
