@@ -15,7 +15,7 @@ var max = 100,count = 0;
 
 init();
 createScene();
-//initStars();
+initStars();
 animate();
 
 function getRandomColor(){
@@ -39,11 +39,11 @@ function init() {
 	scene.fog = new THREE.Fog( 0x000000, 1, 15000 );
 	scene.autoUpdate = false;
 	//LIGHT
-	var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+	/*var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 	scene.add( light );
-	var light = new THREE.DirectionalLight( 0xffffff );
-	light.position.set( 0, 0, 1 ).normalize();
-	scene.add( light );
+	var light2 = new THREE.DirectionalLight( 0x404040 );
+	light2.position.set( 0, 0, 1 ).normalize();
+	scene.add( light2 );*/
 
 	//RENDERER
 	renderer = new THREE.WebGLRenderer();
@@ -57,6 +57,23 @@ function init() {
 	
 	window.addEventListener( 'resize', onWindowResize, false );	
 	
+	//SKY
+	var geometry = new THREE.SphereGeometry(3000, 60, 40);
+	var uniforms = {
+	  texture: { type: 't', value: THREE.ImageUtils.loadTexture( "sky.jpg" ) }
+	};
+
+	var material = new THREE.ShaderMaterial( {
+	  uniforms:       uniforms,
+	  vertexShader:   document.getElementById('sky-vertex').textContent,
+	  fragmentShader: document.getElementById('sky-fragment').textContent
+	});
+
+	skyBox = new THREE.Mesh(geometry, material);
+	skyBox.scale.set(-1, 1, 1);
+	skyBox.eulerOrder = 'XZY';
+	skyBox.renderDepth = 1000.0;
+	scene.add(skyBox);
 	
 }
 
@@ -77,10 +94,10 @@ function initStars(){
 		geometry.vertices.push( vertex );
 		colors[ i ] = new THREE.Color( 0xFFFFFF );
 		//colors[ i ].setHSL( ( vertex.x + 1000 ) / 2000, 1, 0.5 );
-		colors[ i ].setHSL( 0.1, 1, 0.5 );
+		colors[ i ].setHSL( 1, 1, 1 );
 	}
 	geometry.colors = colors;
-	material = new THREE.PointCloudMaterial( { size: 80, map: sprite, vertexColors: THREE.VertexColors, transparent: true } );
+	material = new THREE.PointCloudMaterial( { size: 50, map: sprite, vertexColors: THREE.VertexColors, transparent: true } );
 	//material.color.setHSL( 0.8, 1, 0.5 );
 	particles = new THREE.PointCloud( geometry, material );
 	particles.sortParticles = true;
