@@ -98,5 +98,66 @@ utils.Queue.prototype.empty = function () {
     return this.queue.length == 0;
 };
 
+/**
+ * 
+ * @type {Object}
+ */
+utils.Index = function () {
+    this.root = {};
+}
+
+/**
+ * Index an element
+ * @param  {[type]} element
+ */
+utils.Index.prototype.put = function (element, cb) {
+    var node = this.root;
+    var i=0;
+    var next = function () {
+        if (i < element.length) {
+            if (undefined == node[element[i]]) {
+                node[element[i]] = {};
+            }
+            node = node[element[i]];
+            i++;
+            next();
+        } else {
+            cb();
+        }
+    }
+    next();
+};
+
+
+utils.Index.prototype.has = function (element, cb) {
+    var node = this.root;
+    var i=0;
+    var next = function () {
+        if (i < element.length) {
+            if (undefined == node[element[i]]) {
+                cb(false);
+                return;
+            }
+            node = node[element[i]];
+            i++;
+            next();
+        } else {
+            cb(true);
+        }
+    }
+    next();
+}
+
+utils.Index.prototype.hasSync = function (element) {
+    var node = this.root;
+    for (var i=0; i < element.length; i++) {
+        if (undefined == node[element[i]]) {
+            return false;
+        }
+        node = node[element[i]];
+    }
+    return true;
+}
+
 
 module.exports = utils;

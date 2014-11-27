@@ -48,15 +48,15 @@ var server = new Server(serverConfig);
 var db = new Db('LoD', server, dbConfig);
 
 io.on('connection', function(socket){
-    db.command("select from Type", function (err, types) {
+    db.command("select from (select name, in('Contains') from Type) LIMIT 30", function (err, types) {
         if (err) {
             throw err;
         }
 
-        var ts = [];
+        var ts = {};
 
         for (var i in types) {
-            ts.push({id: types[i]['@rid'], name: types[i]['name']});
+            ts[types[i]['@rid']] = {id: types[i]['@rid'], name: types[i]['name'], sources: types[i]['in'] };
         }
 
         db.command("select from (select name, out('Contains') from Source)", function(err, sources) {
@@ -64,11 +64,10 @@ io.on('connection', function(socket){
                 throw err;
             }
 
-            ss = [];
+            ss = {};
             for (i in sources) {
-                ss.push({ id: sources[i]['@rid'], name: sources[i]['name'], types: sources[i]['out'] })
+                ss[sources[i]['@rid']] = { id: sources[i]['@rid'], name: sources[i]['name'], types: sources[i]['out'] };
             }
-            
 
             graph = { sources: ss, types: ts }
             socket.emit('graph', JSON.stringify(graph));
@@ -76,10 +75,11 @@ io.on('connection', function(socket){
             ts = null;
         });
     });
+    
     socket.on('source', function(data){
         data = JSON.parse(data);
         process.emit('source', data, function () {
-            
+            // TODO emit source
         });
     });
 });
@@ -94,7 +94,9 @@ db.open(function(err) {
 
     console.log("Database '" + db.databaseName + "' has " + db.clusters.length + " clusters");
 
-    http.listen(3000, function(){
-        console.log('listening on *:3000');
-    });
+    processor.init(db, function () {
+        http.listen(3000, function(){
+            console.log('listening on *:3000');
+        });
+    })
 });

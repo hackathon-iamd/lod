@@ -2,7 +2,9 @@ var events = require('events'),
     processor = new events.EventEmitter(),
     fs = require('fs'),
     http = require('http'),
-    utils = require(__dirname + '/utils.js');
+    utils = require(__dirname + '/utils.js'),
+    rdf = require('rdf');
+
 
 /**
  * 
@@ -26,20 +28,39 @@ processor.on('source', function (data, cb) {
     });*/
 });
 
+processor.allowedSources = [];
 
 processor.queue = new utils.Queue();
+processor.closed = new utils.Index();
+
+processor.init = function (db, cb) {
+
+    db.command("select from Source)", function(err, sources) {
+        if (err) {
+            throw err;
+        }
+
+        for (var i=0; i <sources.length; i++) {
+            if (undefined != sources[i]['uri']) {
+                processor.allowedSources.push(sources[i]['uri']);
+            }
+        }
+
+        processor.timer = setInterval(function () {
+            if (processor.queue.empty()) {
+                return;
+            }
+            processor.processQueue();
+        }, 100);
 
 
-processor.timer = setInterval(function () {
-    if (processor.queue.empty()) {
-        return;
-    }
-    processor.processQueue();
-}, 100);
-
-
-processor.queue.add({ source: '#0', uri: 'http://www.bioassayontology.org/bao#BAO_0000015', endpoint: 'http://www.ebi.ac.uk/rdf/services/chembl/sparql' });
-processor.queue.add({ source: '#0', uri: 'http://www.bioassayontology.org/bao#BAO_0000040', endpoint: 'http://www.ebi.ac.uk/rdf/services/chembl/sparql' });
+        processor.allowedSources.push('http://www.bioassayontology.org');
+        processor.queue.add({ source: '#0', uri: 'http://www.bioassayontology.org/bao#BAO_0000015', endpoint: 'http://www.ebi.ac.uk/rdf/services/chembl/sparql' });
+        processor.queue.add({ source: '#0', uri: 'http://www.bioassayontology.org/bao#BAO_0000040', endpoint: 'http://www.ebi.ac.uk/rdf/services/chembl/sparql' });
+        
+        cb.call(null);
+    });
+};
 
 processor.processQueue = function () {
 
@@ -48,25 +69,41 @@ processor.processQueue = function () {
             return;
         }
         var o = processor.queue.poll();
+        processor.closed.put(o.uri, function () {
+            var query = 'DESCRIBE <' + o.uri + '>';
+            query = o.endpoint + '?format=N3&query=' + query.urlFormat();
+            
+            http.get(query, function (res) {
+                err = null
+                if (res.statusCode != 200) {
+                    err = 'An error occured'
+                }
 
-        var query = 'DESCRIBE <' + o.uri + '>';
-        query = o.endpoint + '?format=RDF/XML&query=' + query.urlFormat();
-        
-        http.get(query, function (res) {
-            err = null
-            if (res.statusCode != 200) {
-                err = 'An error occured'
-            }
+                var body = '';
+                res.on('data', function (chunk) {
+                    body += chunk;
+                });
 
-            var body = '';
-            res.on('data', function (chunk) {
-                body += chunk;
+                res.on('end', function () {
+                    var turtleParser = new rdf.TurtleParser();
+                    turtleParser.parse(body, function (graph) {
+
+                    }, null, function (triple) {
+                        var subject = triple.subject.nominalValue;
+                        var predicate = triple.predicate.nominalValue;
+                        var target = triple.object.nominalValue;
+
+                        for (var i in processor.allowedSources) {
+                            if (target.indexOf(processor.allowedSources[i]) == 0) {
+                                console.log(target)
+                                processor.queue.add({ uri: target, endpoint: o.endpoint })
+                                return !processor.closed.hasSync(target);
+                            }
+                        }
+                        return false;
+                    });
+                });
             });
-
-            res.on('end', function () {
-                console.log(body)
-            });
-
         });
     };
     cb.call();
