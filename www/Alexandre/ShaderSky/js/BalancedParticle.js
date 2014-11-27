@@ -1,8 +1,10 @@
-BalancedParticle=function(material){
+BalancedParticle=function(name,parent,material){
     THREE.Particle.call(this,material);
     this.velocity=new THREE.Vector3(0,0,0);
     this.force=new THREE.Vector3(0,0,0);
     this.drag=1;
+    this.name = name;
+    this.parent = parent;
 };
 
 BalancedParticle.prototype=new THREE.Particle();

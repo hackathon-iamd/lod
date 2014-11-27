@@ -5,8 +5,10 @@ BalancedNode = function(name,geometry, material) {
     this.drag=1;
     this.arcs=[];
     this.types={};
+    this.particles=[];
     this.siblings={};
     this.sourceName=name;
+    this.expanded = false;
 };
 
 //BalancedNode.prototype = Object.create(THREE.Mesh.prototype);
