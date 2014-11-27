@@ -166,6 +166,11 @@
 	text-align: center;
 }
 
+/* Return */
+.return {
+	text-align: right;
+}
+
 /* Form */
 
 	input[type="text"],
@@ -280,6 +285,10 @@
 			.image.featured img {
 				display: block;
 				width: 100%;
+			}
+
+			.image.person img {
+				display: block;
 			}
 
 /* Icon */
