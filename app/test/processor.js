@@ -1,4 +1,4 @@
-var processor = require(__dirname + '/../processor.js'),
+/*var processor = require(__dirname + '/../processor.js'),
     assert = require('assert');
 
 describe('Processor', function () {
@@ -19,4 +19,4 @@ describe('Processor', function () {
             });
         });
     });
-});
+});*/
