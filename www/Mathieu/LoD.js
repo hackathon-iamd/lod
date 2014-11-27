@@ -25,6 +25,7 @@ var keyboard = new THREEx.KeyboardState();
 var seq=0;
 
 init();
+loadData()
 createScene();
 initStars();
 animate();
@@ -401,3 +402,34 @@ function onDocumentMouseClick(){
 		controls.target.set(INTERSECTED.position.x,INTERSECTED.position.y,INTERSECTED.position.z);
 	}
 }
+
+function loadData()
+{
+	var xmlhttp;
+	var txt,xx,x,i;
+	if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function(){
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			
+		}
+	}
+	xmlhttp.open("GET","http://localhost:3000",true);
+	xmlhttp.send();
+}
+/*function loadData()
+{
+	var xdr = new XDomainRequest(); 
+
+	xdr.onload = function() {
+		alert(xdr.responseText);
+	}
+
+	xdr.open("GET", "http://localhost:3000");
+	xdr.send();
+}*/
