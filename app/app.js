@@ -12,7 +12,7 @@ var orient = require('orientdb'),
     Db = orient.Db,
     Server = orient.Server;
 
-var processor = require(__dirmane + '/processor.js');
+var processor = require(__dirname + '/processor.js');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
