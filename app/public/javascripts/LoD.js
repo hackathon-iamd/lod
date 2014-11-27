@@ -24,16 +24,17 @@ var projector, mouse = { x: 0, y: 0 }, INTERSECTED = null;
 var keyboard = new THREEx.KeyboardState();
 var seq=0;
 
+//Data
+var rawData;
+
 init();
-loadData()
-createScene();
+loadData();
+//simulateScene();
 initStars();
 animate();
 
 function getRandomColor(){
 	return Math.random() * 0x808080 + 0x808080;
-	/*var min = 256/3,max = 256/3*2;
-	return new THREE.Color('rgb('+getRandom(min,max)+','+getRandom(min,max)+','+getRandom(min,max)+')');*/
 }
 
 function getRandom(min,max)
@@ -66,7 +67,6 @@ function init() {
 	container.appendChild( renderer.domElement );
 	
 	// CONTROLS
-	//controls = new THREE.OrbitControls( camera, renderer.domElement );
 	controls = new THREE.TrackballControls( camera, renderer.domElement );
 	
 	// initialize object to perform world/screen calculations
@@ -91,7 +91,6 @@ function init() {
 
 	skyBox = new THREE.Mesh(geometry, material);
 	skyBox.scale.set(-1, 1, 1);
-	//skyBox.eulerOrder = 'XZY';
 	skyBox.rotation.order = 'XZY';
 	skyBox.renderDepth = 1000.0;
 	scene.add(skyBox);	
@@ -107,10 +106,16 @@ function init() {
 	//gui.add( parameters,'a').name("Reset view");
 	gui.add( parameters,'b').name("Show/Hide stars");
 	gui.add( parameters,'c').name("Show/Hide sky");
-	//gui.close();
+	gui.close();
 }
 
 function createScene(){
+	for(i=0;i<rawData.sources.length;i++){
+		addSphere2(rawData.sources[i].name);
+	}
+}
+
+function simulateScene(){
 	var s1 = addSphere2("DB Pedia");	
 	var s2 = addSphere2("Drugbank");
 	var s3 = addSphere2("TNpedia");
@@ -129,12 +134,10 @@ function initStars(){
 		vertex.z = starSpread * Math.random() - starSpread/2;
 		geometry.vertices.push( vertex );
 		colors[ i ] = new THREE.Color( 0xFFFFFF );
-		//colors[ i ].setHSL( ( vertex.x + 1000 ) / 2000, 1, 0.5 );
 		colors[ i ].setHSL( 1, 1, 1 );
 	}
 	geometry.colors = colors;
 	material = new THREE.PointCloudMaterial( { size: starSize, map: sprite, vertexColors: THREE.VertexColors, transparent: true } );
-	//material.color.setHSL( 0.8, 1, 0.5 );
 	particles = new THREE.PointCloud( geometry, material );
 	particles.sortParticles = true;
 	scene.add( particles );
@@ -405,31 +408,15 @@ function onDocumentMouseClick(){
 
 function loadData()
 {
-	var xmlhttp;
-	var txt,xx,x,i;
-	if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-	}
-	else{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function(){
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-			
-		}
-	}
-	xmlhttp.open("GET","http://localhost:3000",true);
-	xmlhttp.send();
+	var socket = io();
+
+            socket.on('graph', function (graph) {
+                //console.log(JSON.parse(graph))
+                rawData = JSON.parse(graph)
+				createScene();
+            });
+
+            socket.on('source', function (graph) {
+
+            });            
 }
-/*function loadData()
-{
-	var xdr = new XDomainRequest(); 
-
-	xdr.onload = function() {
-		alert(xdr.responseText);
-	}
-
-	xdr.open("GET", "http://localhost:3000");
-	xdr.send();
-}*/
