@@ -8,6 +8,9 @@ Arc = function(startN,endN,name,material){
                                         this.linkSpreadFactor * Math.random(),
                                         this.linkSpreadFactor * Math.random());
     this.subdivision = 40;
+    
+    this.startPoint.pushArc(this,true);
+    this.endPoint.pushArc(this,false);
 };
 
 Arc.prototype=new THREE.Line();

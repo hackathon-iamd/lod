@@ -16,7 +16,7 @@
 			var camera, scene, renderer, particle;
 			var mouseX = 0, mouseY = 0;
 			var particles = [],
-				MAX_PARTICLES = 200;
+				MAX_PARTICLES = 5;
 			 
 
 			var windowHalfX = window.innerWidth / 2;
@@ -127,7 +127,7 @@
 						repelforce.copy(p2.position); 
 						repelforce.subSelf(p1.position); 
 						mag = repelforce.length(); 
-						repelstrength = 50-mag; 
+						repelstrength = 200-mag; 
 
 						if((repelstrength>0)&&(mag>0))	{
 
