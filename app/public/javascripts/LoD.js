@@ -298,16 +298,13 @@ function makeSourceNode(name){
 	sourceNodes.push(node);
 
 	scene.add( node );
+	scene.add(node.label);
 	return node;
 }
 /*******************************************************************************************
 								RENDERING FUNCTIONS
 *******************************************************************************************/
 function animate() {
-	/*requestAnimationFrame( animate );
-	labelsUpdate();
-	raycastUpdate();
-	render();*/	
 	if(keyboard.pressed("z"))
 		DEBUG = true;
 	time = Date.now();
@@ -316,6 +313,7 @@ function animate() {
 	uniformTypeNodes();
 	uniformArcs();
 	requestAnimationFrame( animate );
+	labelsUpdate();
 	raycastUpdate();
 
 	controls.update();
@@ -335,7 +333,7 @@ function render() {
 }
 
 function labelsUpdate(){	
-	// pour chaque sphere
+	/*// pour chaque sphere
 	for(i=0;i<sphereDict.length;i++){
 		//position de la caméra
 		var sPos3 = sphereDict[i].sphere.position;
@@ -350,6 +348,23 @@ function labelsUpdate(){
 		//position du label
 		var lPos = sPos3.clone().add(dist3);
 		sphereDict[i].label.position.copy(lPos);
+	}*/
+	
+	// pour chaque sphere
+	for(node in sourceNodes){
+		//position de la caméra
+		var sPos3 = sourceNodes[node].position;
+		//position de la sphere
+		var cPos3 = camera.position;
+		//distance entre la sphere et la camera
+		var dist = sPos3.distanceTo(cPos3);
+		//échelle de distance entre sphere-label et sphere-camera
+		var percentDistLabel = (sourceNodes[node].geometry.boundingSphere.radius+0)/dist;
+		//vecteur différence entre position label et position sphere
+		var dist3 = cPos3.clone().sub(sPos3).multiplyScalar(percentDistLabel);
+		//position du label
+		var lPos = sPos3.clone().add(dist3);
+		sourceNodes[node].label.position.copy(lPos);
 	}
 }
 
@@ -564,81 +579,3 @@ function getRandom(min,max)
     return Math.floor(Math.random()*(max-min+1)+min);
 }
 
-function makeTextSprite( message, parameters )
-{
-	if ( parameters === undefined ) parameters = {};
-	
-	var fontface = parameters.hasOwnProperty("fontface") ? 
-		parameters["fontface"] : "Arial";
-	
-	var fontsize = parameters.hasOwnProperty("fontsize") ? 
-		parameters["fontsize"] : 18;
-	
-	var borderThickness = parameters.hasOwnProperty("borderThickness") ? 
-		parameters["borderThickness"] : 4;
-	
-	var borderColor = parameters.hasOwnProperty("borderColor") ?
-		parameters["borderColor"] : { r:0, g:0, b:0, a:1.0 };
-	
-	var backgroundColor = parameters.hasOwnProperty("backgroundColor") ?
-		parameters["backgroundColor"] : { r:255, g:255, b:255, a:1.0 };
-
-	//var spriteAlignment = parameters.hasOwnProperty("alignment") ?
-	//	parameters["alignment"] : THREE.SpriteAlignment.topLeft;
-
-	//var spriteAlignment = THREE.SpriteAlignment.topLeft;
-		
-
-	var canvas = document.createElement('canvas');
-	var context = canvas.getContext('2d');
-	context.font = "Bold " + fontsize + "px " + fontface;
-    
-	// get size data (height depends only on font size)
-	var metrics = context.measureText( message );
-	var textWidth = metrics.width;
-	
-	// background color
-	context.fillStyle   = "rgba(" + backgroundColor.r + "," + backgroundColor.g + ","
-								  + backgroundColor.b + "," + backgroundColor.a + ")";
-	// border color
-	context.strokeStyle = "rgba(" + borderColor.r + "," + borderColor.g + ","
-								  + borderColor.b + "," + borderColor.a + ")";
-
-	context.lineWidth = borderThickness;
-	roundRect(context, borderThickness/2, borderThickness/2, textWidth + borderThickness, fontsize * 1.4 + borderThickness, 6);
-	// 1.4 is extra height factor for text below baseline: g,j,p,q.
-	
-	// text color
-	context.fillStyle = "rgba(0, 0, 0, 1.0)";
-
-	context.fillText( message, borderThickness, fontsize + borderThickness);
-	
-	// canvas contents will be used for a texture
-	var texture = new THREE.Texture(canvas) 
-	texture.needsUpdate = true;
-
-	var spriteMaterial = new THREE.SpriteMaterial( 
-		{ map: texture, useScreenCoordinates: false/*, alignment: spriteAlignment */} );
-	var sprite = new THREE.Sprite( spriteMaterial );
-	sprite.scale.set(100,50,1.0);
-	return sprite;	
-}
-
-
-// function for drawing rounded rectangles
-function roundRect(ctx, x, y, w, h, r) 
-{
-    ctx.beginPath();
-    ctx.moveTo(x+r, y);
-    ctx.lineTo(x+w-r, y);
-    ctx.quadraticCurveTo(x+w, y, x+w, y+r);
-    ctx.lineTo(x+w, y+h-r);
-    ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
-    ctx.lineTo(x+r, y+h);
-    ctx.quadraticCurveTo(x, y+h, x, y+h-r);
-    ctx.lineTo(x, y+r);
-    ctx.quadraticCurveTo(x, y, x+r, y);
-    ctx.closePath();
-    ctx.fill();
-	ctx.stroke();   
-}
