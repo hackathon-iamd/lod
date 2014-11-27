@@ -2,7 +2,7 @@
 
 //PARAMETERS
 //SPHERE
-var sphereSpread = 1000, sphereDetail=100, sphereMinRadius = 7, sphereMaxRadius = 20;
+var sphereSpread = 1000, sphereDetail=20, sphereMinRadius = 7, sphereMaxRadius = 20;
 var sphereDict = [];
 var sphereLimit = 30,sphereCount = 0;
 var sphereOutileScale = 1.1;
@@ -106,11 +106,15 @@ function init() {
 	var gui = new dat.GUI();	
 	
 	var parameters={
-		a: function(){ alert("Hello!") },
+		a: function(){ 
+			for(node in sourceNodes){
+				sourceNodes[node].position.copy(new THREE.Vector3(0,0,0));
+			}
+		},
 		b: function(){ particles.visible = !particles.visible},
 		c: function(){ skyBox.visible = !skyBox.visible}
 	};
-	//gui.add( parameters,'a').name("Reset view");
+	//gui.add( parameters,'a').name("WIGGLE WIGGLE WIGGLE");
 	gui.add( parameters,'b').name("Show/Hide stars");
 	gui.add( parameters,'c').name("Show/Hide sky");
 	//gui.close();
@@ -160,7 +164,7 @@ function loadData()
 
 function createScene(){
 	for(i=0;i<rawData.sources.length;i++){
-		createSphere(rawData.sources[i].name);
+		makeSourceNode(rawData.sources[i].name);
 	}
 }
 
@@ -535,6 +539,7 @@ function onDocumentMouseMove( event )
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 }
 function onDocumentMouseClick(){
+	//TWEEN CAMERA
 	/*if(INTERSECTED){
 		controls.target.set(INTERSECTED.position.x,INTERSECTED.position.y,INTERSECTED.position.z);
 		//position de la camera
