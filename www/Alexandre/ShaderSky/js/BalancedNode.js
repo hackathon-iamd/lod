@@ -1,8 +1,12 @@
-BalancedNode = function(geometry, material) {
-  THREE.Mesh.call(this,geometry,material);
-  this.velocity=new THREE.Vector3(0,0,0);
-  this.force=new THREE.Vector3(0,0,0); 
-  this.drag=1;
+BalancedNode = function(name,geometry, material) {
+    THREE.Mesh.call(this,geometry,material);
+    this.velocity=new THREE.Vector3(0,0,0);
+    this.force=new THREE.Vector3(0,0,0); 
+    this.drag=1;
+    this.arcs=[];
+    this.types={};
+    this.siblings={};
+    this.sourceName=name;
 };
 
 //BalancedNode.prototype = Object.create(THREE.Mesh.prototype);
@@ -16,7 +20,30 @@ BalancedNode.prototype.update=function(){
     this.velocity.multiplyScalar(this.drag);
     this.position.add(this.velocity);
     this.force.set(0,0,0);
-}
+};
+
+BalancedNode.prototype.pushArc = function(arc,depart){//depart is a boolean
+    //add to types
+    if(this.types[arc.name] == null){
+        this.types[arc.name]={
+            name:arc.name,
+            arcs:[{arc:arc,depart:depart}]
+        };
+    }else{
+        this.types[arc.name].arcs.push({arc:arc,depart:depart});
+    }
+    
+    //add to siblings
+    var sibling = depart?arc.startPoint:arc.endPoint;
+    if(this.siblings[sibling.name] == null){
+       this.siblings[sibling.name]=[]; 
+    }
+    this.siblings[sibling.name].push({arc:arc,depart:!depart});
+};
+
+BalancedNode.prototype.expand = function(){
+    
+};
 
 var TO_RADIANS=Math.PI/180;
 
