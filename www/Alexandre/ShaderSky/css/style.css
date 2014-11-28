@@ -1,0 +1,130 @@
+body {
+    color: #000;
+    /*font-family:Monospace;*/
+    font-family: RopaSans;
+    font-size:13px;
+    text-align:center;
+    font-weight: bold;
+
+    background-color: #fff;
+    margin: 0px;
+    overflow: hidden;
+    text
+}
+
+#info {
+    color:#333;
+    text-shadow: 1px 1px #fff;
+    position: absolute;
+    top: 0px; width: 100%;
+    padding: 5px;
+
+}
+
+a {
+    color: #333;
+}
+
+.overlayCountries {
+    z-index: 10001; /* selected country has z-index:10000*/
+}
+.pointer {
+    pointer-events: auto;
+}
+.noPointer {
+    pointer-events: none;
+}
+
+.addForm{
+background: rgba(0,0,0,0.4);
+   padding: 10px;
+    right:10px;
+}
+
+.addField{
+margin-bottom: 5px;
+    height: 25px;
+}
+
+#hudHeader {
+    position: 				absolute;
+    width: 					40%; 
+    left: 					30px;
+    top: 					20px;
+    color: 					#fff;
+    font-family: 			'RopaSans';
+    display:                none;
+    background: rgba(0,0,0,0.4);
+    text-align: left;
+    padding: 10px;
+}
+#hudHeader h1 {
+    font-size: 				32px;
+    font-family: 			'RopaSans';
+    margin: 				0 0 0px 0;
+    display:                block;
+    float:                  left;
+}
+#hudHeader h1 .subtitle {
+    font-size: 14px;
+    color: #ddd;
+    text-align: left;
+}
+
+#hudButtons {
+    display: none;
+    position: absolute;
+    top: 20px;    
+}
+#hudButtons .countryTextInput {
+    float:                  right;
+    font-size: 				17px;
+    width: 					300px;
+    margin-right: 			5px;
+	font-family: 			'RopaSans';
+	text-transform:          uppercase;
+}
+#hudButtons .armsBtn {
+    float: right;
+    background: 			#333333;
+    padding: 				3px 10px 2px;
+    color: 					white;
+    border: 				0;
+    font-size: 				18px;
+	font-family: 			'RopaSans';
+	cursor: 				pointer;
+	margin-right: 			0px;
+	opacity:                0.9;
+}
+#hudButtons .armsBtn:hover {
+    opacity: 1;
+}
+#hudButtons .aboutBtn {
+	display:				block;
+	clear:					both;
+	margin-right: 			0px;
+	width: 					76px;
+
+}
+#hudButtons .zoomBtn {
+    margin-right:           5px;
+    width:                  30px;
+    font-weight:            bold;
+    height:                 24px;
+    margin-top:             2px;
+}
+
+#hudButtons .zoomOutBtn {
+    font-size:              17px;
+}
+
+/*Import Ropa Sans Font, do we need other font file types??*/
+@font-face {
+    font-family: 'RopaSans';
+    src: url('fonts/RopaSans-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'RopaSans';
+    src: url('fonts/RopaSans-Italic.ttf') format('truetype');
+    font-style: italic;
+}
