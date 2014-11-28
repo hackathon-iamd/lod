@@ -35,7 +35,7 @@ processor.closed = new utils.Index();
 
 processor.init = function (db, cb) {
 
-    db.command("select from Source)", function(err, sources) {
+    db.command("select from Source", function(err, sources) {
         if (err) {
             throw err;
         }
@@ -54,10 +54,6 @@ processor.init = function (db, cb) {
         }, 100);
 
 
-        processor.allowedSources.push('http://www.bioassayontology.org');
-        processor.queue.add({ source: '#0', uri: 'http://www.bioassayontology.org/bao#BAO_0000015', endpoint: 'http://www.ebi.ac.uk/rdf/services/chembl/sparql' });
-        processor.queue.add({ source: '#0', uri: 'http://www.bioassayontology.org/bao#BAO_0000040', endpoint: 'http://www.ebi.ac.uk/rdf/services/chembl/sparql' });
-        
         cb.call(null);
     });
 };
@@ -87,7 +83,9 @@ processor.processQueue = function () {
                 res.on('end', function () {
                     var turtleParser = new rdf.TurtleParser();
                     turtleParser.parse(body, function (graph) {
-
+                        if (graph.length != 0){
+                            console.log(graph)
+                        }
                     }, null, function (triple) {
                         var subject = triple.subject.nominalValue;
                         var predicate = triple.predicate.nominalValue;
@@ -95,7 +93,6 @@ processor.processQueue = function () {
 
                         for (var i in processor.allowedSources) {
                             if (target.indexOf(processor.allowedSources[i]) == 0) {
-                                console.log(target)
                                 processor.queue.add({ uri: target, endpoint: o.endpoint })
                                 return !processor.closed.hasSync(target);
                             }

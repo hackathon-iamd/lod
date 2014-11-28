@@ -48,7 +48,7 @@ var server = new Server(serverConfig);
 var db = new Db('LoD', server, dbConfig);
 
 io.on('connection', function(socket){
-    db.command("select from (select name, in('Contains') from Type) LIMIT 30", function (err, types) {
+    db.command("select from (select @rid, name, in('Contains') from Type) LIMIT 30", function (err, types) {
         if (err) {
             throw err;
         }
@@ -56,20 +56,20 @@ io.on('connection', function(socket){
         var ts = {};
 
         for (var i in types) {
-            ts[types[i]['@rid']] = {id: types[i]['@rid'], name: types[i]['name'], sources: types[i]['in'] };
+            ts[types[i]['rid']] = {id: types[i]['@rid'], name: types[i]['name'], sources: types[i]['in'] };
         }
 
-        db.command("select from (select name, out('Contains') from Source)", function(err, sources) {
+        db.command("select from (select @rid, name, out('Contains') from Source)", function(err, sources) {
             if (err) {
                 throw err;
             }
 
             ss = {};
             for (i in sources) {
-                ss[sources[i]['@rid']] = { id: sources[i]['@rid'], name: sources[i]['name'], types: sources[i]['out'] };
+                ss[sources[i]['rid']] = { id: sources[i]['@rid'], name: sources[i]['name'], types: sources[i]['out'] };
             }
 
-            graph = { sources: ss, types: ts }
+            graph = { sources: ss, types: ts };
             socket.emit('graph', JSON.stringify(graph));
             ss = null;
             ts = null;
