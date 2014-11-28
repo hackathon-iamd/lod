@@ -579,7 +579,7 @@
 
 	#header {
 		text-align: center;
-		padding: 3em 0 0 0;
+		padding: 1em 0 0 0;
 		background-color: #fff;
 		background-image: url("images/bg02.png"), url("images/bg02.png"), url("images/bg01.png");
 		background-position: top left,					top left,					top left;
@@ -588,8 +588,9 @@
 	}
 
 		#header h1 {
-			padding: 0 0 2.75em 0;
+			padding: 0 0 1em 0;
 			margin: 0;
+			position: center;
 		}
 
 			#header h1 a {
@@ -821,7 +822,7 @@
 /* Footer */
 
 	#footer {
-		padding: 4em 0 8em 0;
+		padding: 0 0 0 0;
 	}
 
 		#footer a {
@@ -835,12 +836,21 @@
 			}
 
 		#footer .container {
-			margin-bottom: 4em;
+			margin-bottom: 0;
+			margin-right: auto;
+			margin-left: auto;
+			width: 65%;
+			text-align: center;
+		}
+
+		#footer .row section {
+			margin-right: 15%;
+			margin-left: 15%;
 		}
 
 		#footer .icons {
 			text-align: center;
-			margin: 0;
+			margin: 0.3em;
 		}
 
 			#footer .icons a {
@@ -853,7 +863,8 @@
 
 		#footer .copyright {
 			color: #999999;
-			margin-top: 1.5em;
+			margin-top: 0;
+			margin-bottom: 0;
 			text-align: center;
 			font-size: 0.9em;
 		}
