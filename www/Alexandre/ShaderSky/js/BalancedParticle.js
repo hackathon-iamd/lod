@@ -1,19 +1,15 @@
-BalancedParticle=function(name,parent,material){
-    THREE.Particle.call(this,material);
-    this.velocity=new THREE.Vector3(0,0,0);
-    this.force=new THREE.Vector3(0,0,0);
-    this.drag=1;
+BalancedParticle=function(name,parent,i,geometry,material){
+    THREE.PointCloud.call(this,geometry,material);
     this.name = name;
-    this.parent = parent;
+    this.parentSource = parent;
+    this.particleNumber=i;
 };
 
-BalancedParticle.prototype=new THREE.Particle();
+BalancedParticle.prototype=new THREE.PointCloud();
 
 BalancedParticle.prototype.constructor=BalancedParticle;
 
 BalancedParticle.prototype.update=function(){
-    this.velocity.addSelf(this.force);
-    this.velocity.multiplyScalar(this.drag);
-    this.position.addSelf(this.velocity);
-    this.force.set(0,0,0);
+    //console.log(this.parentSource.sphereType[this.particleNumber]);
+ this.position.addVectors(this.parentSource.position,this.parentSource.sphereType[this.particleNumber].clone().multiplyScalar(this.parentSource.particleScale)) ;
 }

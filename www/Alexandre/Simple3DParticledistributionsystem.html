@@ -16,7 +16,7 @@
 			var camera, scene, renderer, particle;
 			var mouseX = 0, mouseY = 0;
 			var particles = [],
-				MAX_PARTICLES = 5;
+				MAX_PARTICLES = 50;
 			 
 
 			var windowHalfX = window.innerWidth / 2;
@@ -111,8 +111,9 @@
 
 					repelforce.copy(p1.position);
 	 				
-					mag = repelforce.length(); 
-	 				repelstrength = (mag - 100) *-1; 
+					mag = repelforce.length()*2; 
+                    //console.log(mag);
+	 				repelstrength = (mag - 50) *-1; 
 
 					if(mag>0){
 	 					repelforce.multiplyScalar(repelstrength/mag);
@@ -127,8 +128,7 @@
 						repelforce.copy(p2.position); 
 						repelforce.subSelf(p1.position); 
 						mag = repelforce.length(); 
-						repelstrength = 200-mag; 
-
+						repelstrength = 100-mag; 
 						if((repelstrength>0)&&(mag>0))	{
 
 							repelforce.multiplyScalar(repelstrength*0.0035 / mag); 
