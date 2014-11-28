@@ -29,7 +29,10 @@
 			<div id="header">
 						
 				<!-- Logo -->
-					<h1><a href="index.php" id="logo">L<em>eague</em> o<em>f</em> D<em>ata</em></a></h1>
+					<h1>
+						<img src="images/lod_logo.jpg" alt=""/>
+						<!-- <a href="index.php" id="logo">L<em>eague</em> o<em>f</em> D<em>ata</em></a> -->
+					</h1>
 					<!-- <h1><a href="index.html" id="logo"><em>L</em>eague <em>o</em>f <em>D</em>ata</a></h1> -->
 				
 				<!-- Nav -->
@@ -57,8 +60,12 @@
 		),
 		"Partners" => array(
 			"tn" => "TELECOM Nancy",
+			"ca" => "Crédit Agricole S.A.",
+			"intech" => "In Tech",
 			"bhc" => "b.h. consulting",
-			"ca" => "Crédit Agricole S.A."
+			"loria" => "Loria",
+			"inria" => "Inria",
+			"dataconnexions" => "DataConnexions"
 		)
 	);
 

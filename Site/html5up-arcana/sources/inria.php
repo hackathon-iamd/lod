@@ -6,15 +6,15 @@
 					
 							<article>
 								<header>
-									<h2>Conclusion</h2>
-									<p>Nous avons beaucoup appris durant ce hackathon</p>
+									<h2>Inria</h2>
+									<p>Laboratoire de recherche</p>
 								</header>
 								
-								<span class="image person"><img src="images/apprentissage.jpg" alt="" /></span>
-
-								<p><br/></p>
+								<span class="image person"><img src="images/inria_logo.jpg" alt="" /></span>
 								
-								<h3>Jonathan ARNAULT</h3>
+								<!-- <p>Visualization</p> -->
+								
+								<h3><br/>What about it ?</h3>
 								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus 
 								justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis, 
 								ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet 
@@ -23,32 +23,16 @@
 								rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien. 
 								Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi. 
 								Phasellus sed nisl vitae risus tristique volutpat. Cras rutrum commodo luctus.</p>
-								
-								<h3>Mathieu BUCHHEIT</h3>
+
 								<p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim 
 								quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu. 
 								Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna, 
 								fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium. 
 								Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu. 
 								Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
-								
-								<h3>Ondine LAMY</h3>
-								<p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim 
-								quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu. 
-								Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna, 
-								fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium. 
-								Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu. 
-								Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
-								
-								<h3>Alexandre WEILER</h3>
-								<p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim 
-								quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu. 
-								Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna, 
-								fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium. 
-								Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu. 
-								Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
-								</article>
+								<p>Their <a href="http://www.inria.fr/">web site</a>.</p>
+							</article>
 				
 					</div>
 				</div>
-			</section>
+			</section>		

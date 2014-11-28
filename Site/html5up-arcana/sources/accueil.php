@@ -43,14 +43,14 @@
 			</section>
 
 		<!-- Gigantic Heading -->
-			<section class="wrapper style2">
+			<!-- <section class="wrapper style2">
 				<div class="container">
 					<header class="major">
 						<h2>L<em>eague</em> o<em>f</em> D<em>ata</em></h2>
 						<p class="pindex">Data Visualisation</p>
 					</header>
 				</div>
-			</section>
+			</section> -->
 
 		<!-- Posts -->
 			<section class="wrapper style1">
@@ -78,12 +78,11 @@
 					<div class="row">
 						<section class="6u 12u(2)">
 							<div class="box post">
-								<img src="images/telecom_nancy_iamd_logo.jpg" alt="" class="image left"/>
+								<img src="images/intech_logo.png" alt="" class="image left"/>
 								<div class="inner">
-									<h3>IAMD</h3>
+									<h3>In Tech</h3>
 									<p>
-										<b>I</b>ngénierie et <b>A</b>pplications des <b>M</b>asses de <b>D</b>onnées <br/>
-										L'un des 5 approfondissements possibles à TELECOM Nancy.
+										Conseil et Expertise en Technologies et Systèmes d'Information
 									</p>
 								</div>
 							</div>
