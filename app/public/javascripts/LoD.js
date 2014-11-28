@@ -38,9 +38,9 @@ var rawData;
 										MAIN
 *******************************************************************************************/
 init();
-//loadData();
+loadData();
 //simulateScene();
-simulateSceneNew();
+//simulateSceneNew();
 animate();
 
 /*******************************************************************************************
@@ -200,6 +200,7 @@ function simulateSceneNew(){
 	makeArc("10",s7,s2,12);
 }
 
+///OLD
 function createLink(s1,s2,n){
 	//si n est nul on le met a 1 pour créer un seul lien
 	if(n==null)
@@ -224,6 +225,7 @@ function createLink(s1,s2,n){
 	}
 }
 
+///OLD
 function createSphere(name,x,y,z){
 	if(sphereCount < sphereLimit){
 		if(x==null&&y==null&&z==null){			

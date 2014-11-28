@@ -9,11 +9,12 @@ BalancedNode = function(name,geometry, material) {
     this.siblings={};
     this.sourceName=name;
     this.expanded = false;
-	
 	//Label
 	var label = makeTextSprite( " "+name+" ");
 	label.position.set(0,0,0);
 	this.label = label;
+    this.sphereType =[];
+    this.particleScale=0;
 };
 
 //BalancedNode.prototype = Object.create(THREE.Mesh.prototype);
