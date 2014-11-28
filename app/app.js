@@ -84,12 +84,17 @@ io.on('connection', function(socket){
     
     socket.on('source', function(data){
         data = JSON.parse(data);
-        console.log(data);
-        /*process.emit('source', data, function () {
+        for (var i in data) {
+            if (data[i] == null || data[i] == '') {
+                return;
+            }
+        }
+
+        processor.emit('source', data, db, function () {
             createGraph(function (graph) {
                 io.emit('graph', JSON.stringify(graph));
             });
-        });*/
+        });
     });
 });
 

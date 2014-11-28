@@ -14,18 +14,16 @@ String.prototype.urlFormat = function () {
     return this.toString().replace(/ /g, '+').replace(/:/g, '%3A').replace(/\//g, '%2F').replace(/\?/g, '%3F').replace(/#/g, '%23');
 };
 
-processor.on('source', function (data, cb) {
-    processor.addSource({ id: '#0' }, data, cb);
-
-    /*db.command("insert into Source set name = '" + data.name + "', url = '" + data.url + "', endpoint = '" + data.npoint + "'", function(err) {
+processor.on('source', function (data, db, cb) {
+    db.command("insert into Source set name='" + data.name + "', uri='" + data.uri + "', endpoint='" + data.endpoint + "'", function(err) {
         if (err) {
             throw err;
         }
         cb.call(null);
         
-        // TODO source id
-        processor.fetchData('#0', data.endpoint);
-    });*/
+        //processor.addSource({ id: '#0' }, data, cb);
+        //processor.fetchData('#0', data.endpoint);
+    });
 });
 
 processor.allowedSources = [];
