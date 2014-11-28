@@ -17,14 +17,24 @@
 
         <div class="overlayCountries noPointer addForm" id="hudButtons" style="display: block;">
             <div class="addField">
-                <input type="button" value="SEARCH" class="searchBtn armsBtn pointer">
-                <input type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="UNITED STATES" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+                <div  class="searchLbl armsBtn ">NOM</div>
+                <input id="sourcename" type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
             </div>
 
             <div class="addField">
-                <input type="button" value="SEARCH" class="searchBtn armsBtn pointer">
-                <input type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="UNITED STATES" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+                <div class="searchLbl armsBtn ">URI</div>
+                <input id="sourceuri" type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
             </div>
+            
+            <div class="addField">
+                <div class="searchLbl armsBtn ">SPARQL</div>
+                <input id="sourceendpoint" type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+            </div>
+            
+            <div class="addField">
+                <input type="button" value="AJOUTER" class="armsBtn ajouter" onclick="ajouterSource()">
+            </div>
+            
         </div>
 
         <script src="js/three.min.js"></script>
@@ -109,6 +119,16 @@
                 INITIALIZATION FUNCTIONS
             *********************************************************************************************************************************/
 
+            function ajouterSource(){
+                var nom = document.getElementById("sourcename").value;
+                var uri = document.getElementById("sourceuri").value;
+                var endpoint=document.getElementById("sourceendpoint").value;
+                
+                var form={name:nom,uri:uri,endpoint:endpoint};
+                console.log(form);
+            }
+            
+            
             function init() {
                 container = document.createElement( 'div' );
                 document.body.appendChild( container );

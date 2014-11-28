@@ -32,7 +32,7 @@ a {
     pointer-events: auto;
 }
 .noPointer {
-    pointer-events: none;
+    /*pointer-events: none;*/
 }
 
 .addForm{
@@ -44,6 +44,10 @@ background: rgba(0,0,0,0.4);
 .addField{
 margin-bottom: 5px;
     height: 25px;
+}
+.ajouter{
+    width:100% !important;
+    cursor:pointer !important;
 }
 
 #hudHeader {
@@ -92,9 +96,10 @@ margin-bottom: 5px;
     border: 				0;
     font-size: 				18px;
 	font-family: 			'RopaSans';
-	cursor: 				pointer;
+	/*cursor: 				pointer;*/
 	margin-right: 			0px;
 	opacity:                0.9;
+    width: 50px;
 }
 #hudButtons .armsBtn:hover {
     opacity: 1;
