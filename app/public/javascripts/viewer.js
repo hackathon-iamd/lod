@@ -287,13 +287,17 @@ function loadData()
 
 
 function createScene(){
-	for(i in rawData.sources){
-		makeSourceNode(i,rawData.sources[i].name);
+	for(type in rawData.sources){
+		makeSourceNode(type,rawData.sources[type].name);
 	}
 	///TODO
-	for(i in rawData.types){
-		if(rawData.types[i].sources.length>1)//Voir 3
-			makeArc(i,sourceNodes[rawData.types[i].sources[0]],sourceNodes[rawData.types[i].sources[1]]);
+	for(type in rawData.types){
+		if(rawData.types[type].sources.length>1){
+			for(j=0;j<rawData.types[type].sources.length-1;j++){
+				for(k=j+1;k<rawData.types[type].sources.length;k++)
+					makeArc(""+type+k,sourceNodes[rawData.types[type].sources[j]],sourceNodes[rawData.types[type].sources[k]]);
+			}
+		}
 	}
 }
 
