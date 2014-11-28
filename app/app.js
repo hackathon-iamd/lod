@@ -27,7 +27,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
-    console.log(res.sendFile);
     fs.readFile(__dirname + '/views/index.html', 'utf8', function (err, data) {
         if (err) {
             return console.log(err);
@@ -47,7 +46,7 @@ var serverConfig = {
 var server = new Server(serverConfig);
 var db = new Db('LoD', server, dbConfig);
 
-io.on('connection', function(socket){
+var createGraph = function (cb) {
     db.command("select from (select @rid, name, in('Contains') from Type) LIMIT 30", function (err, types) {
         if (err) {
             throw err;
@@ -70,17 +69,27 @@ io.on('connection', function(socket){
             }
 
             graph = { sources: ss, types: ts };
-            socket.emit('graph', JSON.stringify(graph));
             ss = null;
             ts = null;
+            cb(graph);
         });
+    });
+}
+
+io.on('connection', function(socket){
+
+    createGraph(function (graph) {
+        socket.emit('graph', JSON.stringify(graph));
     });
     
     socket.on('source', function(data){
         data = JSON.parse(data);
-        process.emit('source', data, function () {
-            // TODO emit source
-        });
+        console.log(data);
+        /*process.emit('source', data, function () {
+            createGraph(function (graph) {
+                io.emit('graph', JSON.stringify(graph));
+            });
+        });*/
     });
 });
 

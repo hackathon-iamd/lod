@@ -284,7 +284,7 @@ function simulateSceneNew(){
 
 function loadData()
 {
-	var socket = io();
+	window.socket = io();
 
 		socket.on('graph', function (graph) {
 			//console.log(JSON.parse(graph))

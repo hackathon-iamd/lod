@@ -4,5 +4,5 @@
                 var endpoint=document.getElementById("sourceendpoint").value;
                 
                 var form={name:nom,uri:uri,endpoint:endpoint};
-                console.log(form);
+                socket.emit('source', JSON.stringify(form));
             }
