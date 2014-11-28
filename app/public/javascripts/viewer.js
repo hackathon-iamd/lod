@@ -16,6 +16,9 @@ var linkColor =0x0088ff;
 var linkOpacity = 0.4;
 var linkSubSegments = 60;
 var color, colors = [];
+//SKY
+var skyBox;
+var skyType = 1;
 
 var container, stats;
 
@@ -53,11 +56,6 @@ var rawData;
 *******************************************************************************************/
 init();
 loadData();
-//simulateScene();
-//simulateSceneNew();
-//createScene();
-//createSceneOLD();
-//simulateSceneNew()
 animate();
 
 
@@ -88,8 +86,6 @@ function init() {
 	light2.position.set( 0, 0, 1 ).normalize();
 	scene.add( light2 );*/
 	
-	//var size = 500;
-
 	//RENDERER
 	renderer = new THREE.WebGLRenderer( /*{ antialias: false }*/ );
 	renderer.setSize( window.innerWidth, window.innerHeight );
@@ -98,13 +94,6 @@ function init() {
 	
 	// CONTROLS
 	controls = new THREE.TrackballControls( camera, renderer.domElement );
-
-	//STATS
-	/*stats = new Stats();
-	stats.domElement.style.position = 'absolute';
-	stats.domElement.style.bottom = '0px';
-	stats.domElement.style.zIndex = 100;
-	container.appendChild( stats.domElement );*/
 
 	//EVENTS
 	renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -121,7 +110,7 @@ function init() {
 	scene.add( plane );
 	
 	//SKY
-	//initBetterSky()
+	initBetterSky()
 	initSky();
 	
 	//STARS	
@@ -191,15 +180,31 @@ function initBetterSky(){
 	skyBox.scale.set(-1, 1, 1);
 	skyBox.rotation.order = 'XZY';
 	skyBox.renderDepth = 1000.0;
-	//skyBox.visible = false;
+	skyBox.visible = false;
 	scene.add(skyBox);
 }
 
 function initGUI(){
 	//var gui = new dat.GUI();	
 	var parameters={
-	b: function(){ particles.visible = !particles.visible},
-	c: function(){ skyBox.visible = !skyBox.visible}
+		a: function(){simulateSceneNew()},
+		b: function(){ //no sky
+			if(skyType == 0){
+				sky.visible = false;
+				skyBox.visible = false;
+				skyType = 1;
+			}
+			else if(skyType == 1){ //sky weiler
+				sky.visible = true;
+				skyBox.visible = false;			
+				skyType = 2;
+			} if(skyType == 2){ //sky buchette
+				sky.visible = false;
+				skyBox.visible = true;		
+				skyType = 0;
+			}			
+		},
+		c: function(){particles.visible = !particles.visible}
 	};
     //gui.domElement.id = 'gui';
 	
@@ -208,10 +213,10 @@ function initGUI(){
 	//DAT.GUI.autoPlace = false;
 
 	gui = new dat.GUI( { autoPlace: false } );	
-	gui.add( parameters,'b').name("Show/Hide stars");
-	gui.add( parameters,'c').name("Show/Hide sky");
-	//gui.close();
-	
+	gui.add( parameters,'c').name("Show / Hide stars");
+	gui.add( parameters,'b').name("Change sky");
+	gui.add( parameters,'a').name("Simulate data");
+	gui.close();	
 
 	// Do some custom styles ...
 	gui.domElement.style.position = 'absolute';
@@ -247,29 +252,6 @@ function initStars(){
 	scene.add( particles );
 }
 
-
-
-function createSceneOLD(){
-	var s1 = makeSourceNode("S1");
-	var s2 = makeSourceNode("S2");
-	var s3 = makeSourceNode("S3");
-	var s4 = makeSourceNode("S4");
-	var s5 = makeSourceNode("S5");
-	var s6 = makeSourceNode("S6");
-	var s7 = makeSourceNode("S7");
-	makeArc(s1,s2,1);
-	makeArc(s1,s3,5);
-	makeArc(s2,s3,1);
-	makeArc(s4,s3,1);
-	makeArc(s4,s1,100);
-	makeArc(s4,s5,1);
-	makeArc(s6,s2,1);
-	makeArc(s7,s6,1);
-
-	
-}
-
-///DEBUG
 function simulateSceneNew(){	
 	var s1 = makeSourceNode("S1","S1");
 	var s2 = makeSourceNode("S2","S2");
@@ -296,16 +278,11 @@ function simulateSceneNew(){
 function loadData()
 {
 	window.socket = io();
-
-		socket.on('graph', function (graph) {
-			//console.log(JSON.parse(graph))
-			rawData = JSON.parse(graph)
-			createScene();
-		});
-
-		socket.on('source', function (graph) {
-			
-		});            
+	socket.on('graph', function (graph) {
+		clearScene();
+		rawData = JSON.parse(graph)
+		createScene();
+	});        
 }
 
 
@@ -313,29 +290,32 @@ function createScene(){
 	for(i in rawData.sources){
 		makeSourceNode(i,rawData.sources[i].name);
 	}
+	///TODO
 	for(i in rawData.types){
 		if(rawData.types[i].sources.length>1)//Voir 3
 			makeArc(i,sourceNodes[rawData.types[i].sources[0]],sourceNodes[rawData.types[i].sources[1]]);
 	}
 }
 
-/*function makeArc(s1,s2,n){
-	if(n==null)
-		n=1;
-	for(i=0;i<n;i++){
-		material = new THREE.MeshBasicMaterial({
-			transparent: true,
-			opacity: 0.2,
-			depthTest: false,
-			color: 0x0088ff,
-			blending: THREE.AdditiveBlending
-		});
-		var line = new Arc(s1,s2,"Type"+i,material);
-		//line.needsUpdate(true);
-		arcs.push(line);
-		scene.add(line);	
+
+function clearScene(){
+	for(i in expandedSources){		
+		for(j=0;j<expandedSources[i].particles.length;j++)
+			scene.remove(expandedSources[i].particles[j]);
+		scene.remove(expandedSources[i]);
 	}
-}*/
+	expandedSources={};
+	for(i in sourceNodes){
+		scene.remove(sourceNodes[i].getLabel());
+		scene.remove(sourceNodes[i]);
+	}
+	sourceNodes = {};	
+	sourceNodesTab = [];
+	for(i in arcs){		
+		scene.remove(arcs[i]);
+	}
+	arcs = {};
+}
 
 function makeArc(id,s1,s2,n){
 	if(n==null)
@@ -357,28 +337,6 @@ function makeArc(id,s1,s2,n){
 		scene.add(line);	
 	}
 }
-
-/*function makeSourceNode(name){
-
-	radius = getRandom(sphereMinRadius,sphereMaxRadius);
-	geometry = new THREE.SphereGeometry( 10, sphereDetail, sphereDetail );
-	material = new THREE.MeshBasicMaterial( { color: getRandomColor() } );
-	var node = new BalancedNode(name, geometry, material );
-
-	node.position.set(0,1,100); 
-	node.velocity.set(1,0,0);
-	node.velocity.rotateZ(Math.random()*90);			
-	node.velocity.rotateY(Math.random()*360);
-
-	node.position.rotateZ(Math.random()*360); 
-
-	node.drag = 0.96;
-
-	sourceNodes.push(node);
-
-	scene.add( node );
-	return node;
-}*/
 
 function makeSourceNode(id,name){
 	radius = getRandom(sphereMinRadius,sphereMaxRadius);
@@ -421,11 +379,6 @@ function makeSourceNode(id,name){
 
 ///TODO
 function makeTypeNode(type,parent,i){
-
-	/* var pColor = 0xff4400;
-	var pSize = 0.6;*/
-
-
 	// inner particle
 	var pMat = new THREE.PointCloudMaterial( { size: 1, map: particleSprite, blending: THREE.AdditiveBlending, depthTest: false, transparent : true } );
 
@@ -470,28 +423,6 @@ function removeTypeNode(sourceNode){
 	}
 	sourceNode.particles=[];
 }
-
-///TODO
-/*function generateSprite() {
-
-	var canvas = document.createElement( 'canvas' );
-	canvas.width = 16;
-	canvas.height = 16;
-	canvas.loaded = true;
-
-	var context = canvas.getContext( '2d' );
-	var gradient = context.createRadialGradient( canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2 );
-	gradient.addColorStop( 0, 'rgba(255,255,255,1)' );
-	gradient.addColorStop( 0.2, 'rgba(0,255,255,1)' );
-	gradient.addColorStop( 0.4, 'rgba(0,0,64,1)' );
-	gradient.addColorStop( 1, 'rgba(0,0,0,1)' );
-
-	context.fillStyle = gradient;
-	context.fillRect( 0, 0, canvas.width, canvas.height );
-
-	return canvas;
-
-}*/
 
 /********************************************************************************************************************************
 	EXPAND AND UNIFORM
@@ -538,10 +469,6 @@ function expand(sourceNode){
 		}
 	} );
 
-
-
-
-
 	var typeCount = Object.keys(sourceNode.types).length;
 
 
@@ -568,9 +495,6 @@ function expand(sourceNode){
 	}
 
 }
-
-
-
 
 function uniformSourceNodes(){
 	//Uniform nodes
@@ -631,15 +555,12 @@ function uniformTypeNodes(){
 			particles[i].update(); 
 		}
 
-
 		// iteratate through each particle
 		for (i=0; i<particles.length; i++){
 			var particle = particles[i]; 
 			particle.update();
 		}
-
 	}
-
 	//end uniform nodes
 }
 
@@ -655,27 +576,19 @@ function uniformArcs(){
 *********************************************************************************************************************************/
 
 function animate(time) {
-
-	//time = Date.now();
-
 	uniformSourceNodes();
 	uniformTypeNodes();
 	uniformArcs();
 	requestAnimationFrame( animate );
 	labelsUpdate();
 	TWEEN.update(time);
-	//raycastUpdate();
 	controls.update();
 
 	render();
-
 }
 
 function render() {
-
 	renderer.render( scene, camera );
-	//stats.update();
-
 }
 
 
@@ -697,65 +610,6 @@ function labelsUpdate(){
 		sourceNodes[node].label.position.copy(lPos);
 	}
 }
-
-/*function raycastUpdate(){
-	// find intersections
-
-	// create a Ray with origin at the mouse position
-	//   and direction into the scene (camera direction)
-	var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
-	vector.unproject(camera);
-	var ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
-
-	// create an array containing all objects in the scene with which the ray intersects
-	var intersects = ray.intersectObjects( scene.children );
-
-	// INTERSECTED = the object in the scene currently closest to the camera 
-	//		and intersected by the Ray projected from the mouse position 	
-	
-	// if there is one (or more) intersections
-	if ( intersects.length > 0 )
-	{	
-		for(i=0;i<intersects.length;i++){				
-			//if(intersects[i].object.tag=="source"){
-			if(intersects[i].object.type=="Mesh" && intersects[i].object instanceof BalancedNode){
-			
-				// if the closest object intersected is not the currently stored intersection object
-				if (intersects[ i ].object != INTERSECTED ) 
-				{
-					//on supprime le contour de l'ancien object choisi
-					if ( INTERSECTED ) 
-						scene.remove(INTERSECTED.outline);
-					// on sauvegarde l'object choisi
-					INTERSECTED = intersects[ i ].object;
-					//On créer un coutour pour l'object choisi
-					var outlineMaterial1 = new THREE.MeshBasicMaterial( { color: INTERSECTED.material.color, side: THREE.BackSide } );
-					var outlineMesh1 = new THREE.Mesh( INTERSECTED.geometry, outlineMaterial1 );
-					outlineMesh1.position.copy(INTERSECTED.position);
-					outlineMesh1.scale.multiplyScalar(sphereOutileScale);
-					INTERSECTED.outline = outlineMesh1;
-					scene.add( outlineMesh1 );
-		
-					//on affiche le contour de l'objet choisi
-					//INTERSECTED.outline.visible = true;
-				}
-				else{ //we update the position of it outline object
-					INTERSECTED.outline.position.copy(INTERSECTED.position);				
-				}
-				break;
-			}
-			else // there are no intersections
-			{
-				//on supprime le contour de l'ancien object choisi
-				if ( INTERSECTED ) 
-					scene.remove(INTERSECTED.outline);
-				// remove previous intersection object reference
-				//     by setting current intersection object to "nothing"
-				INTERSECTED = null;
-			}
-		}
-	} 	
-}*/
 
 /********************************************************************************************************************************
 	ON EVENTS

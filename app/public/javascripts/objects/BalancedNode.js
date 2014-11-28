@@ -29,6 +29,9 @@ BalancedNode.prototype.update=function(){
     this.position.add(this.velocity);
     this.force.set(0,0,0);
 };
+BalancedNode.prototype.getLabel=function(){
+	return this.label;
+};
 
 BalancedNode.prototype.pushArc = function(arc,depart){//depart is a boolean
     //add to types
