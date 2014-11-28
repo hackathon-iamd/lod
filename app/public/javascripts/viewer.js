@@ -82,11 +82,11 @@ function init() {
 	//scene.autoUpdate = false;
 
 	//LIGHT
-	var light = new THREE.AmbientLight( 0x333333 );
+	/*var light = new THREE.AmbientLight( 0x333333 );
 	scene.add( light );
 	var light2 = new THREE.DirectionalLight( 0xFFFFFF );
 	light2.position.set( 0, 0, 1 ).normalize();
-	scene.add( light2 );
+	scene.add( light2 );*/
 	
 	//var size = 500;
 
@@ -100,11 +100,11 @@ function init() {
 	controls = new THREE.TrackballControls( camera, renderer.domElement );
 
 	//STATS
-	stats = new Stats();
+	/*stats = new Stats();
 	stats.domElement.style.position = 'absolute';
 	stats.domElement.style.bottom = '0px';
 	stats.domElement.style.zIndex = 100;
-	container.appendChild( stats.domElement );
+	container.appendChild( stats.domElement );*/
 
 	//EVENTS
 	renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -121,8 +121,8 @@ function init() {
 	scene.add( plane );
 	
 	//SKY
-	initBetterSky()
-	//initSky();
+	//initBetterSky()
+	initSky();
 	
 	//STARS	
 	initStars();
@@ -354,7 +354,14 @@ function makeArc(id,s1,s2,n){
 	for(i=0;i<n;i++){
 		if(i>0)
 			dif=i;
-		material = new THREE.LineBasicMaterial( { color: linkColor, transparent: true, opacity: linkOpacity} );
+		//material = new THREE.LineBasicMaterial( { color: linkColor, transparent: true, opacity: linkOpacity} );
+		material = new THREE.MeshBasicMaterial({
+                        transparent: true,
+                        opacity: 0.2,
+                        depthTest: true,
+                        color: 0x0088ff,
+                        blending: THREE.AdditiveBlending
+                    });
 		var line = new Arc(s1,s2,id+dif,material);
 		arcs[id+dif] = line;
 		scene.add(line);	
@@ -386,7 +393,25 @@ function makeArc(id,s1,s2,n){
 function makeSourceNode(id,name){
 	radius = getRandom(sphereMinRadius,sphereMaxRadius);
 	geometry = new THREE.SphereGeometry( radius, sphereDetail, sphereDetail );
-	material = new THREE.MeshLambertMaterial( { color: getRandomColor() } );
+	//material = new THREE.MeshLambertMaterial( { color: getRandomColor() } );
+	// create custom material from the shader code above
+	//   that is within specially labeled script tags
+	var material = new THREE.ShaderMaterial( 
+		{
+			uniforms: 
+			{ 
+				"c":   { type: "f", value: 1.0 },
+				"p":   { type: "f", value: 2.5 },
+				glowColor: { type: "c", value: new THREE.Color(/*0x00f0ff*/getRandomColor()) },
+				viewVector: { type: "v3", value: camera.position }
+			},
+			vertexShader:  document.getElementById( 'vertexShader'   ).textContent,
+			fragmentShader:document.getElementById( 'fragmentShader' ).textContent,
+			side: THREE.FrontSide,
+			blending: THREE.AdditiveBlending,
+			transparent: false
+		}   ); 
+	
 	var node = new BalancedNode(name, geometry, material );
 
 	node.position.set(0,1,100); 
@@ -659,7 +684,7 @@ function animate(time) {
 function render() {
 
 	renderer.render( scene, camera );
-	stats.update();
+	//stats.update();
 
 }
 
@@ -773,10 +798,10 @@ function onDocumentMouseMove( event ) {
 
 		if ( INTERSECTED != intersects[ 0 ].object ) {
 
-			if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+			//if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
 
 			INTERSECTED = intersects[ 0 ].object;
-			INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+			//INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
 
 
 			plane.position.copy( INTERSECTED.position );
@@ -788,7 +813,7 @@ function onDocumentMouseMove( event ) {
 
 	} else {
 
-		if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+		//if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
 
 		INTERSECTED = null;
 

@@ -25,6 +25,7 @@
         <script src="/javascripts/objects/BalancedNode.js"></script>
         <script src="/javascripts/objects/Arc.js"></script>
 
+		<!-- SKY custom shaders -->
 		<script type="application/x-glsl" id="sky-vertex">
 			varying vec2 vUV;
 
@@ -44,6 +45,32 @@
 			  gl_FragColor = vec4(sample.xyz, sample.w);
 			}
 		</script>
+		<!-- ---------------- Custom Shader Code ------------------------ -->
+        <script id="vertexShader" type="x-shader/x-vertex">
+			uniform vec3 viewVector;
+			uniform float c;
+			uniform float p;
+			varying float intensity;
+			void main() 
+			{
+				vec3 vNormal = normalize( normalMatrix * normal );
+				vec3 vNormel = normalize( normalMatrix * viewVector );
+				intensity = pow( c - dot(vNormal, vNormel), p );
+
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+			}
+        </script>
+
+        <!-- fragment shader a.k.a. pixel shader -->
+        <script id="fragmentShader" type="x-shader/x-vertex"> 
+			uniform vec3 glowColor;
+			varying float intensity;
+			void main() 
+			{
+				vec3 glow = glowColor * intensity;
+				gl_FragColor = vec4( glow, 1.0 );
+			}
+        </script>
 		
         <script src="/javascripts/viewer.js"></script>
     </body>
