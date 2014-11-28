@@ -8,9 +8,24 @@
 		<script src="/javascripts/sockets.io.js"></script>
     </head>
     <body>
-		<div id="info">
-			League of Data - LoD planet Viewer
-		</div>
+        <!-- All other hud can go here-->
+        <div id="hudHeader" class="overlayCountries noPointer" style="display: block;">
+            <h1 class="noPointer">Team League Of Data
+                <div class="subtitle">Cartographie navigable des Linked Open Data biomédicales</div>
+            </h1>
+        </div>
+
+        <div class="overlayCountries noPointer addForm" id="hudButtons" style="display: block;">
+            <div class="addField">
+                <input type="button" value="SEARCH" class="searchBtn armsBtn pointer">
+                <input type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="UNITED STATES" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+            </div>
+
+            <div class="addField">
+                <input type="button" value="SEARCH" class="searchBtn armsBtn pointer">
+                <input type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="UNITED STATES" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+            </div>
+        </div>
 
         <script src="/javascripts/three.min.js"></script>
 
