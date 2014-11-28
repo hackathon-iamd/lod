@@ -5,42 +5,26 @@
         <title>three.js webgl - shaders - sky sun shader</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-        <style>
-
-            body {
-                color: #000;
-                font-family:Monospace;
-                font-size:13px;
-                text-align:center;
-                font-weight: bold;
-
-                background-color: #fff;
-                margin: 0px;
-                overflow: hidden;
-                text
-            }
-
-            #info {
-                color:#333;
-                text-shadow: 1px 1px #fff;
-                position: absolute;
-                top: 0px; width: 100%;
-                padding: 5px;
-
-            }
-
-            a {
-                color: #333;
-            }
-
-        </style>
+        <link rel="stylesheet" type="text/css" href="css/style.css">   
     </head>
     <body>
+        <!-- All other hud can go here-->
+        <div id="hudHeader" class="overlayCountries noPointer" style="display: block;">
+            <h1 class="noPointer">Team League Of Data
+                <div class="subtitle">Cartographie navigable des Linked Open Data biomédicales</div>
+            </h1>
+        </div>
 
-        <div id="info"><a href="http://threejs.org" target="_blank">three.js</a> webgl - sky + sun shader
+        <div class="overlayCountries noPointer addForm" id="hudButtons" style="display: block;">
+            <div class="addField">
+                <input type="button" value="SEARCH" class="searchBtn armsBtn pointer">
+                <input type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="UNITED STATES" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+            </div>
 
-            <br/><a href="https://plus.google.com/117614030945250277079/posts/MYkgKdvLhNj">More info</a> by <a href="http://twitter.com/blurspline">@blurspline</a>
-
+            <div class="addField">
+                <input type="button" value="SEARCH" class="searchBtn armsBtn pointer">
+                <input type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="UNITED STATES" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+            </div>
         </div>
 
         <script src="js/three.min.js"></script>
@@ -54,7 +38,33 @@
         <script src="js/Detector.js"></script>
         <script src="js/stats.min.js"></script>
         <script src="js/dat.gui.min.js"></script>
+        <!-- ---------------- Custom Shader Code ------------------------ -->
+        <script id="vertexShader" type="x-shader/x-vertex">
+        uniform vec3 viewVector;
+        uniform float c;
+        uniform float p;
+        varying float intensity;
+        void main() 
+        {
+            vec3 vNormal = normalize( normalMatrix * normal );
+            vec3 vNormel = normalize( normalMatrix * viewVector );
+            intensity = pow( c - dot(vNormal, vNormel), p );
 
+            gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+        }
+        </script>
+
+        <!-- fragment shader a.k.a. pixel shader -->
+        <script id="fragmentShader" type="x-shader/x-vertex"> 
+        uniform vec3 glowColor;
+        varying float intensity;
+        void main() 
+        {
+            vec3 glow = glowColor * intensity;
+            gl_FragColor = vec4( glow, 1.0 );
+        }
+        </script>
+        <!-- ----------------------------------------------------------- -->
 
         <script>
 
@@ -127,7 +137,7 @@
                 stats.domElement.style.position = 'absolute';
                 stats.domElement.style.top = '0px';
                 stats.domElement.style.zIndex = 100;
-                container.appendChild( stats.domElement );
+                //container.appendChild( stats.domElement );
 
                 //
                 renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -270,7 +280,7 @@
                     material = new THREE.MeshBasicMaterial({
                         transparent: true,
                         opacity: 0.2,
-                        depthTest: false,
+                        depthTest: true,
                         color: 0x0088ff,
                         blending: THREE.AdditiveBlending
                     });
@@ -285,8 +295,30 @@
 
                 radius = getRandom(sphereMinRadius,sphereMaxRadius);
                 geometry = new THREE.SphereGeometry( 10, sphereDetail, sphereDetail );
-                material = new THREE.MeshBasicMaterial( { color: getRandomColor() } );
-                var node = new BalancedNode(name, geometry, material );
+                // material = new THREE.MeshBasicMaterial( { color: getRandomColor() } );
+
+
+                // create custom material from the shader code above
+                //   that is within specially labeled script tags
+                var materialGlow = new THREE.ShaderMaterial( 
+                    {
+                        uniforms: 
+                        { 
+                            "c":   { type: "f", value: 1.0 },
+                            "p":   { type: "f", value: 2.5 },
+                            glowColor: { type: "c", value: new THREE.Color(/*0x00f0ff*/getRandomColor()) },
+                            viewVector: { type: "v3", value: camera.position }
+                        },
+                        vertexShader:  document.getElementById( 'vertexShader'   ).textContent,
+                        fragmentShader:document.getElementById( 'fragmentShader' ).textContent,
+                        side: THREE.FrontSide,
+                        blending: THREE.AdditiveBlending,
+                        transparent: false
+                    }   );         
+
+
+
+                var node = new BalancedNode(name, geometry, materialGlow );
                 /*var x = sphereSpread * ( 0.5 - Math.random() );
                 var y = 0.25*sphereSpread * ( 0.5 - Math.random() );
                 var z = sphereSpread * ( 0.5 - Math.random() );
@@ -610,10 +642,10 @@
 
                     if ( INTERSECTED != intersects[ 0 ].object ) {
 
-                        if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+                        //if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
 
                         INTERSECTED = intersects[ 0 ].object;
-                        INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+                        //INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
 
 
                         plane.position.copy( INTERSECTED.position );
@@ -625,7 +657,7 @@
 
                 } else {
 
-                    if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+                    // if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
 
                     INTERSECTED = null;
 
