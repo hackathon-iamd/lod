@@ -63,6 +63,10 @@
 		margin: 0 0 2em 0;
 	}
 
+	.ulproject {
+		margin-left: 10px;
+	}
+
 	p {
 		text-align: justify;
 	}

@@ -15,50 +15,34 @@
 								<p>Si notre projet vous a plu, allez donc regarder ces projets aussi ;)</p>
 								
 								<h3>CNN Ecosphere</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus 
-								justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis, 
-								ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet 
-								vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor. 
-								Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis 
-								rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien. 
-								Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi. 
-								Phasellus sed nisl vitae risus tristique volutpat. Cras rutrum commodo luctus.</p>
+								<p>
+									CNN Ecosphere est un projet de visualisation de connection des tweets. 
+								</p>
 								<p><a href="http://edition.cnn.com/2012/06/15/tech/cnn-ecosphere-rio/">CNN Ecosphere</a></p>
 
 								<h3>OrientDB</h3>
-								<p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim 
-								quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu. 
-								Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna, 
-								fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium. 
-								Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu. 
-								Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
+								<p>
+									OrientDB est une base de données permettant de stocker entre autre des liens. Comme 'est ce qui 
+									nous a décidé pour l'utiliser.
+								</p>
 								<p><a href="http://www.orientechnologies.com/orientdb/">OrientDB</a></p>
 
 								<h3>three.js</h3>
-								<p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim 
-								quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu. 
-								Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna, 
-								fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium. 
-								Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu. 
-								Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
+								<p>
+									C'est une bibliothèque javascript pour faire de la 3D. 
+								</p>
 								<p><a href="http://threejs.org/">three.js</a></p>
 
 								<h3>HTML5UP</h3>
-								<p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim 
-								quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu. 
-								Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna, 
-								fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium. 
-								Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu. 
-								Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
+								<p>
+									L'un des design proposé a été utilisé pour la réalisation du site.
+								</p>
 								<p><a href="http://html5up.net/">HTML5UP</a></p>
 
 								<h3>pixabay</h3>
-								<p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim 
-								quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu. 
-								Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna, 
-								fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium. 
-								Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu. 
-								Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
+								<p>
+									Presque toutes les images proviennent de cette plateforme. Celle-ci regroupe des images libres de droit.
+								</p>
 								<p><a href="http://pixabay.com/">pixabay</a></p>
 							</article>
 				

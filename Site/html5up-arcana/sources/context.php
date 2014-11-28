@@ -14,22 +14,33 @@
 								
 								<p>Durant 5 jours 5 équipes ont travaillé sur leur sujet. Le but : présenter leur travaille et une maquette de leur projet.</p>
 								
-								<h3>Our project</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus 
-								justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis, 
-								ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet 
-								vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor. 
-								Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis 
-								rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien. 
-								Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi. 
-								Phasellus sed nisl vitae risus tristique volutpat. Cras rutrum commodo luctus.</p>
+								<h3>Where were we and why?</h3>
+								<p>
+									Dans le cadre des études à TELECOM Nancy, les troisième années de cette école ont une 
+									semaine dite bloquée. Durant cette semaine, chaque approfondissement à des activités
+									différentes. <br/>
+									Pour les élèves en Ingénierie et Applications des Masses de Données (IAMD) cette semaine
+									est consacrée à un hackathon. Ils sont répartis en groupes de trois ou quatre élèves
+									et chaque groupe travail sur un sujet différent. A la fin de la semaine, chaque groupe 
+									présente leur travail devant un jury composé d'industriel et d'enseignant. 
+								</p>
 
-								<p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim 
-								quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu. 
-								Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna, 
-								fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium. 
-								Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu. 
-								Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
+								<p>
+									<ul>
+										Pour l'année scolaire 2014-2015, il y a eu cinq projets de réalisés durant la semaine du 24 au 28 novembre 2014 :
+										<li class="ulproject"><em>Mise au point d'un modèle prédictif lors d’un accident, de la route pour jeunes conducteurs</em>, présenté par Rémi SELLEM du Crédit Agricole S.A.</li>
+										<li class="ulproject"><em>Fouille de données et visualisation pour le jeu de stratégie Dota 2</em>, présenté par Chedy RAÏSSI de l'Inria</li>
+										<li class="ulproject"><em>Réutilisation des données de data.gov.fr en vue d’une soumission au concours DataConnexions</em>, pour le concours DataConnexions</li>
+										<li class="ulproject"><em>Collecte et analyse des données d’utilisation du site de VOD, Citizen CAM</em>, présenté par Bertrand PETAT de b.h. consulting</li>
+										<li class="ulproject"><em>Cartographie navigable des données ouvertes liées biomédicales</em>, présenté par Adrien COULET du Loria</li>
+									</ul>
+									<ul>
+										Cette année deux prix étaient en jeu :
+										<li class="ulproject"><em>Grand Prix</em>, d'une valeur totale de 400euros au choix des gagnants, sponsorisé par le Crédit Agricole S.A..</li>
+										<li class="ulproject"><em>Prix de l'Innovation</em>, un drone par membre de l'équipe d'une valeur totale de 600euros, sponsorisé par In Tech.</li>
+									</ul>
+									A travers ce site vous pourrez découvrir le travail effectué sur le dernier projet, <em>Cartographie navigable des données ouvertes liées biomédicales</em>. L'équipe de dévelopement vous souhaite bonne lecture.
+								</p>
 							</article>
 				
 					</div>

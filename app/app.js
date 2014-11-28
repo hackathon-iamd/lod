@@ -47,7 +47,7 @@ var server = new Server(serverConfig);
 var db = new Db('LoD', server, dbConfig);
 
 var createGraph = function (cb) {
-    db.command("select from (select @rid, name, in('Contains') from Type) LIMIT 30", function (err, types) {
+    db.command("select from (select @rid, name, in('Contains') from Type) LIMIT 1000", function (err, types) {
         if (err) {
             throw err;
         }
@@ -58,7 +58,7 @@ var createGraph = function (cb) {
             ts[types[i]['rid']] = {id: types[i]['@rid'], name: types[i]['name'], sources: types[i]['in'] };
         }
 
-        db.command("select from (select @rid, name, out('Contains') from Source)", function(err, sources) {
+        db.command("select from (select @rid, name, out('Contains') from Source) LIMIT 1000", function(err, sources) {
             if (err) {
                 throw err;
             }
