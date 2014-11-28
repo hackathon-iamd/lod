@@ -30,7 +30,7 @@
 						
 				<!-- Logo -->
 					<h1>
-						<img src="images/lod_logo.jpg" alt=""/>
+						<img src="images/lod_logo.png" alt=""/>
 						<!-- <a href="index.php" id="logo">L<em>eague</em> o<em>f</em> D<em>ata</em></a> -->
 					</h1>
 					<!-- <h1><a href="index.html" id="logo"><em>L</em>eague <em>o</em>f <em>D</em>ata</a></h1> -->
