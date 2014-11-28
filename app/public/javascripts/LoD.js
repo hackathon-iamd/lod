@@ -27,8 +27,8 @@ var projector, mouse = { x: 0, y: 0 }, INTERSECTED = null;
 var keyboard = new THREEx.KeyboardState();
 
 //array for nodes ForceLoop
-var sourceNodes = [];
-var arcs = [];
+var sourceNodes = {};
+var arcs = {};
 var expandedSources={};
 
 //Data
@@ -163,8 +163,12 @@ function loadData()
 *******************************************************************************************/
 
 function createScene(){
-	for(i=0;i<rawData.sources.length;i++){
-		makeSourceNode(rawData.sources[i].name);
+	for(i in rawData.sources){
+		makeSourceNode(i,rawData.sources[i].name);
+	}
+	for(i in rawData.types){
+		if(rawData.types[i].sources.length>1)//Voir 3
+			makeArc(i,sourceNodes[rawData.types[i].sources[0]],sourceNodes[rawData.types[i].sources[1]]);
 	}
 }
 
@@ -177,23 +181,23 @@ function simulateScene(){
 	createLink(s3,s2,10);
 }
 function simulateSceneNew(){	
-	var s1 = makeSourceNode("S1");
-	var s2 = makeSourceNode("S2");
-	var s3 = makeSourceNode("S3");
-	var s4 = makeSourceNode("S4");
-	var s5 = makeSourceNode("S5");
-	var s6 = makeSourceNode("S6");
-	var s7 = makeSourceNode("S7");
-	makeArc(s1,s2,5);
-	makeArc(s1,s3,2);
-	makeArc(s2,s3,30);
-	makeArc(s4,s3,15);
-	makeArc(s4,s1,30);
-	makeArc(s2,s5,3);
-	makeArc(s4,s5,11);
-	makeArc(s6,s2,5);
-	makeArc(s7,s6,10);
-	makeArc(s7,s2,12);
+	var s1 = makeSourceNode("S1","S1");
+	var s2 = makeSourceNode("S2","S2");
+	var s3 = makeSourceNode("S3","S3");
+	var s4 = makeSourceNode("S4","S4");
+	var s5 = makeSourceNode("S5","S5");
+	var s6 = makeSourceNode("S6","S6");
+	var s7 = makeSourceNode("S7","S7");
+	makeArc("1",s1,s2,5);
+	makeArc("2",s1,s3,2);
+	makeArc("3",s2,s3,30);
+	makeArc("4",s4,s3,15);
+	makeArc("5",s4,s1,30);
+	makeArc("6",s2,s5,3);
+	makeArc("7",s4,s5,11);
+	makeArc("8",s6,s2,5);
+	makeArc("9",s7,s6,10);
+	makeArc("10",s7,s2,12);
 }
 
 function createLink(s1,s2,n){
@@ -263,25 +267,21 @@ function createSphere(name,x,y,z){
 	}
 }
 
-function makeArc(s1,s2,n){
+function makeArc(id,s1,s2,n){
 	if(n==null)
 		n=1;
+	var dif="";
 	for(i=0;i<n;i++){
+		if(i>0)
+			dif=i;
 		material = new THREE.LineBasicMaterial( { color: linkColor, transparent: true, opacity: linkOpacity} );
-		/*material = new THREE.MeshBasicMaterial({
-			transparent: true,
-			opacity: 0.2,
-			depthTest: false,
-			color: 0x0088ff,
-			blending: THREE.AdditiveBlending
-		});*/
-		var line = new Arc(s1,s2,"Type"+i,material);
-		arcs.push(line);
+		var line = new Arc(s1,s2,id+dif,material);
+		arcs[id+dif] = line;
 		scene.add(line);	
 	}
 }
 
-function makeSourceNode(name){
+function makeSourceNode(id,name){
 	radius = getRandom(sphereMinRadius,sphereMaxRadius);
 	geometry = new THREE.SphereGeometry( radius, sphereDetail, sphereDetail );
 	material = new THREE.MeshLambertMaterial( { color: getRandomColor() } );
@@ -295,7 +295,7 @@ function makeSourceNode(name){
 
 	node.drag = 0.96;
 
-	sourceNodes.push(node);
+	sourceNodes[id] = node;
 
 	scene.add( node );
 	scene.add(node.label);
@@ -305,8 +305,6 @@ function makeSourceNode(name){
 								RENDERING FUNCTIONS
 *******************************************************************************************/
 function animate() {
-	if(keyboard.pressed("z"))
-		DEBUG = true;
 	time = Date.now();
 
 	uniformSourceNodes();
@@ -414,17 +412,17 @@ function raycastUpdate(){
 				}
 				break;
 			}
+			else // there are no intersections
+			{
+				//on supprime le contour de l'ancien object choisi
+				if ( INTERSECTED ) 
+					scene.remove(INTERSECTED.outline);
+				// remove previous intersection object reference
+				//     by setting current intersection object to "nothing"
+				INTERSECTED = null;
+			}
 		}
-	} 
-	else // there are no intersections
-	{
-		//on supprime le contour de l'ancien object choisi
-		if ( INTERSECTED ) 
-			scene.remove(INTERSECTED.outline);
-		// remove previous intersection object reference
-		//     by setting current intersection object to "nothing"
-		INTERSECTED = null;
-	}
+	} 	
 }
 
 /*******************************************************************************************
@@ -436,7 +434,7 @@ function uniformSourceNodes(){
 		mag, 
 		repelstrength; 
 
-	for (i=0; i<sourceNodes.length; i++){
+	for (i in sourceNodes){
 		var p1 = sourceNodes[i]; 
 
 		repelforce.copy(p1.position);
@@ -450,9 +448,9 @@ function uniformSourceNodes(){
 			p1.position.add(repelforce); 
 		}
 
-		if(i>=sourceNodes.length-1) continue; 
-
-		for(j=i+1; j<sourceNodes.length; j++) {
+		if(i>=Object.keys(sourceNodes).length-1) continue; 
+		
+		for (j in sourceNodes){
 			var p2 = sourceNodes[j];
 
 			repelforce.copy(p2.position); 
@@ -470,7 +468,7 @@ function uniformSourceNodes(){
 		}
 	}
 	// iteratate through each particle
-	for (i=0; i<sourceNodes.length; i++){
+	for (i in sourceNodes){
 		var sourceNode = sourceNodes[i]; 
 		sourceNode.update();
 	}
@@ -528,7 +526,7 @@ function uniformTypeNodes(){
 
 function uniformArcs(){
 	// iteratate through each arc
-	for (i=0; i<arcs.length; i++){
+	for (i in arcs){
 		var arc = arcs[i]; 
 		arc.update();
 	}
