@@ -133,3 +133,5 @@ margin-bottom: 5px;
     src: url('fonts/RopaSans-Italic.ttf') format('truetype');
     font-style: italic;
 }
+
+#my-gui-container { position: absolute; top: 70px; left: 12px }

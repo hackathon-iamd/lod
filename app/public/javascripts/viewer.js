@@ -57,7 +57,7 @@ loadData();
 //simulateSceneNew();
 //createScene();
 //createSceneOLD();
-simulateSceneNew()
+//simulateSceneNew()
 animate();
 
 
@@ -196,20 +196,31 @@ function initBetterSky(){
 }
 
 function initGUI(){
-	var gui = new dat.GUI();		
+	//var gui = new dat.GUI();	
 	var parameters={
-		a: function(){ 
-			for(node in sourceNodes){
-				sourceNodes[node].position.copy(new THREE.Vector3(0,0,0));
-			}
-		},
-		b: function(){ particles.visible = !particles.visible},
-		c: function(){ skyBox.visible = !skyBox.visible}
+	b: function(){ particles.visible = !particles.visible},
+	c: function(){ skyBox.visible = !skyBox.visible}
 	};
-	//gui.add( parameters,'a').name("WIGGLE WIGGLE WIGGLE");
+    //gui.domElement.id = 'gui';
+	
+	//Notice this belongs to the DAT.GUI class (uppercase)
+	// and not an instance thereof.
+	//DAT.GUI.autoPlace = false;
+
+	gui = new dat.GUI( { autoPlace: false } );	
 	gui.add( parameters,'b').name("Show/Hide stars");
 	gui.add( parameters,'c').name("Show/Hide sky");
 	//gui.close();
+	
+
+	// Do some custom styles ...
+	gui.domElement.style.position = 'absolute';
+	gui.domElement.style.top = '20px';
+	gui.domElement.style.left = '20px';
+
+	var el = document.getElementById('my-gui-container')
+	if(el!=null)
+		el.appendChild( gui.domElement );
 }
 
 function initStars(){
