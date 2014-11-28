@@ -7,7 +7,6 @@ var starSize = 50;
 var starSpread = 3000;
 //SPHERE
 var sphereSpread = 1000, sphereDetail=20, sphereMinRadius = 7, sphereMaxRadius = 20;
-var sphereDict = [];
 var sphereLimit = 30,sphereCount = 0;
 var sphereOutileScale = 1.1;
 //LINKS
@@ -41,7 +40,7 @@ var geometry;
 var material, mesh, lod;
 
 //tab for nodes ForceLoop
-var sourceNodes = {};
+var sourceNodes = {},sourceNodesTab = [];
 var arcs = {};
 var expandedSources={};
 var particleSprite = THREE.ImageUtils.loadTexture( "images/electric.png" );
@@ -53,12 +52,12 @@ var rawData;
 										MAIN
 *******************************************************************************************/
 init();
-//loadData();
+loadData();
 //simulateScene();
 //simulateSceneNew();
 //createScene();
 //createSceneOLD();
-simulateSceneNew()
+//simulateSceneNew()
 animate();
 
 
@@ -113,6 +112,13 @@ function init() {
 	renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
 	window.addEventListener( 'resize', onWindowResize, false );
 	
+	//RAYCASTER PLANE
+	plane = new THREE.Mesh(
+		new THREE.PlaneBufferGeometry( 2000, 2000, 8, 8 ),
+		new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.25, transparent: true } )
+	);
+	plane.visible = false;
+	scene.add( plane );
 	
 	//SKY
 	initBetterSky()
@@ -270,12 +276,7 @@ function createSceneOLD(){
 	makeArc(s6,s2,1);
 	makeArc(s7,s6,1);
 
-	plane = new THREE.Mesh(
-		new THREE.PlaneBufferGeometry( 2000, 2000, 8, 8 ),
-		new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.25, transparent: true } )
-	);
-	plane.visible = false;
-	scene.add( plane );
+	
 }
 
 ///DEBUG
@@ -301,6 +302,22 @@ function simulateSceneNew(){
 /********************************************************************************************************************************
 	MAKE ELEMENTS
 *********************************************************************************************************************************/
+
+function loadData()
+{
+	var socket = io();
+
+		socket.on('graph', function (graph) {
+			//console.log(JSON.parse(graph))
+			rawData = JSON.parse(graph)
+			createScene();
+		});
+
+		socket.on('source', function (graph) {
+			
+		});            
+}
+
 
 function createScene(){
 	for(i in rawData.sources){
@@ -381,7 +398,7 @@ function makeSourceNode(id,name){
 	node.drag = 0.96;
 
 	sourceNodes[id] = node;
-
+	sourceNodesTab.push(node);
 	scene.add( node );
 	scene.add(node.label);
 	return node;
@@ -630,8 +647,9 @@ function animate(time) {
 	uniformTypeNodes();
 	uniformArcs();
 	requestAnimationFrame( animate );
+	labelsUpdate();
 	TWEEN.update(time);
-
+	//raycastUpdate();
 	controls.update();
 
 	render();
@@ -645,6 +663,84 @@ function render() {
 
 }
 
+
+function labelsUpdate(){
+	// pour chaque sphere
+	for(node in sourceNodes){
+		//position de la caméra
+		var sPos3 = sourceNodes[node].position;
+		//position de la sphere
+		var cPos3 = camera.position;
+		//distance entre la sphere et la camera
+		var dist = sPos3.distanceTo(cPos3);
+		//échelle de distance entre sphere-label et sphere-camera
+		var percentDistLabel = (sourceNodes[node].geometry.boundingSphere.radius+0)/dist;
+		//vecteur différence entre position label et position sphere
+		var dist3 = cPos3.clone().sub(sPos3).multiplyScalar(percentDistLabel);
+		//position du label
+		var lPos = sPos3.clone().add(dist3);
+		sourceNodes[node].label.position.copy(lPos);
+	}
+}
+
+/*function raycastUpdate(){
+	// find intersections
+
+	// create a Ray with origin at the mouse position
+	//   and direction into the scene (camera direction)
+	var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
+	vector.unproject(camera);
+	var ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+
+	// create an array containing all objects in the scene with which the ray intersects
+	var intersects = ray.intersectObjects( scene.children );
+
+	// INTERSECTED = the object in the scene currently closest to the camera 
+	//		and intersected by the Ray projected from the mouse position 	
+	
+	// if there is one (or more) intersections
+	if ( intersects.length > 0 )
+	{	
+		for(i=0;i<intersects.length;i++){				
+			//if(intersects[i].object.tag=="source"){
+			if(intersects[i].object.type=="Mesh" && intersects[i].object instanceof BalancedNode){
+			
+				// if the closest object intersected is not the currently stored intersection object
+				if (intersects[ i ].object != INTERSECTED ) 
+				{
+					//on supprime le contour de l'ancien object choisi
+					if ( INTERSECTED ) 
+						scene.remove(INTERSECTED.outline);
+					// on sauvegarde l'object choisi
+					INTERSECTED = intersects[ i ].object;
+					//On créer un coutour pour l'object choisi
+					var outlineMaterial1 = new THREE.MeshBasicMaterial( { color: INTERSECTED.material.color, side: THREE.BackSide } );
+					var outlineMesh1 = new THREE.Mesh( INTERSECTED.geometry, outlineMaterial1 );
+					outlineMesh1.position.copy(INTERSECTED.position);
+					outlineMesh1.scale.multiplyScalar(sphereOutileScale);
+					INTERSECTED.outline = outlineMesh1;
+					scene.add( outlineMesh1 );
+		
+					//on affiche le contour de l'objet choisi
+					//INTERSECTED.outline.visible = true;
+				}
+				else{ //we update the position of it outline object
+					INTERSECTED.outline.position.copy(INTERSECTED.position);				
+				}
+				break;
+			}
+			else // there are no intersections
+			{
+				//on supprime le contour de l'ancien object choisi
+				if ( INTERSECTED ) 
+					scene.remove(INTERSECTED.outline);
+				// remove previous intersection object reference
+				//     by setting current intersection object to "nothing"
+				INTERSECTED = null;
+			}
+		}
+	} 	
+}*/
 
 /********************************************************************************************************************************
 	ON EVENTS
@@ -671,8 +767,8 @@ function onDocumentMouseMove( event ) {
 
 	}
 
-	var intersects = raycaster.intersectObjects( sourceNodes );
-
+	var intersects = raycaster.intersectObjects( sourceNodesTab );
+	///TODO add outline
 	if ( intersects.length > 0 ) {
 
 		if ( INTERSECTED != intersects[ 0 ].object ) {
@@ -711,7 +807,7 @@ function onDocumentMouseDown( event ) {
 
 	var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
 
-	var intersects = raycaster.intersectObjects( sourceNodes );
+	var intersects = raycaster.intersectObjects( sourceNodesTab );
 
 	if ( intersects.length > 0 ) {
 
