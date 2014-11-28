@@ -17,14 +17,24 @@
 
         <div class="overlayCountries noPointer addForm" id="hudButtons" style="display: block;">
             <div class="addField">
-                <input type="button" value="SEARCH" class="searchBtn armsBtn pointer">
-                <input type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="UNITED STATES" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+                <div  class="searchLbl armsBtn ">NOM</div>
+                <input id="sourcename" type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
             </div>
 
             <div class="addField">
-                <input type="button" value="SEARCH" class="searchBtn armsBtn pointer">
-                <input type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="UNITED STATES" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+                <div class="searchLbl armsBtn ">URI</div>
+                <input id="sourceuri" type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
             </div>
+            
+            <div class="addField">
+                <div class="searchLbl armsBtn ">SPARQL</div>
+                <input id="sourceendpoint" type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+            </div>
+            
+            <div class="addField">
+                <input type="button" value="AJOUTER" class="armsBtn ajouter" onclick="ajouterSource()">
+            </div>
+            
         </div>
 
         <script src="/javascripts/three.min.js"></script>
@@ -35,7 +45,7 @@
         <script src="/javascripts/Detector.js"></script>
         <script src="/javascripts/stats.min.js"></script>
         <script src="/javascripts/dat.gui.min.js"></script>
-		
+		<script src="/javascripts/addSourceForm.js"></script>
         <script src="/javascripts/objects/BalancedParticle.js"></script>
         <script src="/javascripts/objects/BalancedNode.js"></script>
         <script src="/javascripts/objects/Arc.js"></script>
