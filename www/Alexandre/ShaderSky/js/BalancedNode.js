@@ -9,6 +9,8 @@ BalancedNode = function(name,geometry, material) {
     this.siblings={};
     this.sourceName=name;
     this.expanded = false;
+    this.sphereType =[];
+    this.particleScale=0;
 };
 
 //BalancedNode.prototype = Object.create(THREE.Mesh.prototype);

@@ -18,15 +18,21 @@ Arc.prototype=new THREE.Line();
 Arc.prototype.constructor=Arc;
 
 Arc.prototype.update = function(){
-    var curve = new THREE.QuadraticBezierCurve3();
-    curve.v0 = this.startPoint.position.clone();
-    curve.v2 = this.endPoint.position.clone();
-    curve.v1 = new THREE.Vector3((curve.v0.x+curve.v2.x)/2+this.linkSpread.x, 
-                                (curve.v0.y+curve.v2.y)/2+this.linkSpread.y, 
-                                (curve.v0.z+curve.v2.z)/2+this.linkSpread.z);
+    
+    var startP = this.startPoint.position.clone();
+    var endP = this.endPoint.position.clone();
+    var curve = new THREE.SplineCurve3([
+        startP,
+        new THREE.Vector3((startP.x+endP.x)/2+this.linkSpread.x, 
+                                (startP.y+endP.y)/2+this.linkSpread.y, 
+                                (startP.z+endP.z)/2+this.linkSpread.z),
+        endP
+    ]);
     this.geometry.vertices = [];
-    for (j = 0; j < this.subdivision; j++) {
-        this.geometry.vertices.push( curve.getPoint(j / this.subdivision) );
+    var splinePoints = curve.getPoints(this.subdivision);
+    
+    for (j = 0; j < splinePoints.length; j++) {
+        this.geometry.vertices.push( splinePoints[j] );
     }
     this.geometry.verticesNeedUpdate = true;
 };
