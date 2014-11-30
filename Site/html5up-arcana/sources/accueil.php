@@ -19,7 +19,7 @@
 						<section class="4u 12u(2)">
 							<div class="box highlight">
 								<i class="icon major fa-pencil"></i>
-								<h3>Some informations</h3>
+								<h3>Some information</h3>
 								<p class="pindex">
 									A TELECOM Nancy </br>
 									La semaine du 24-11-14 au 28-11-14
@@ -61,7 +61,7 @@
 								<img src="images/telecom_nancy_logo_couleur_redim.png" alt="" class="image left"/>
 								<div class="inner">
 									<h3>TELECOM Nancy</h3>
-									<p>Ecole d'ingénieur en informatique, anciennement ESIAL.</p>
+									<p>Ecole d'ingénieur en informatique</p>
 								</div>
 							</div>
 						</section>
@@ -69,8 +69,8 @@
 							<div class="box post">
 								<img src="images/ca_logo_couleur_redim.png" alt="" class="image left"/>
 								<div class="inner">
-									<h3>Crédit agricole</h3>
-									<p>Banque partenaire de l'événement.</p>
+									<h3>Crédit Agricole S.A.</h3>
+									<p>Banque partenaire de l'événement</p>
 								</div>
 							</div>
 						</section>
@@ -92,7 +92,7 @@
 								<img src="images/BHConsulting_logo_couleur_redim.png" alt="" class="image left"/>
 								<div class="inner">
 									<h3>b.h. consulting</h3>
-									<p>Entreprise informatique partenaire de l'événement.</p>
+									<p>Entreprise informatique partenaire de l'événement</p>
 								</div>
 							</div>
 						</section>
