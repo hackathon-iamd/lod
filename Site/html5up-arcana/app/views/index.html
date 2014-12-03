@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>League of Data</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="../public/stylesheets/style.css">
+		<!--<script src="../public/javascripts/sockets.io.js"></script>-->
+    </head>
+    <body>
+        <!-- All other hud can go here-->
+        <div id="hudHeader" class="overlayCountries noPointer" style="display: block;">
+            <h1 class="noPointer">Team League Of Data
+                <div class="subtitle">Cartographie navigable des Linked Open Data biomédicales</div>
+            </h1>
+        </div>
+
+        <div class="overlayCountries noPointer addForm" id="hudButtons" style="display: block;">
+            <div class="addField">
+                <div  class="searchLbl armsBtn ">NOM</div>
+                <input id="sourcename" type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+            </div>
+
+            <div class="addField">
+                <div class="searchLbl armsBtn ">URI</div>
+                <input id="sourceuri" type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+            </div>
+            
+            <div class="addField">
+                <div class="searchLbl armsBtn ">SPARQL</div>
+                <input id="sourceendpoint" type="text" name="country" class="countryTextInput pointer noMapDrag ui-autocomplete-input" value="" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+            </div>
+            
+            <div class="addField">
+                <input type="button" value="AJOUTER" class="armsBtn ajouter" onclick="ajouterSource()">
+            </div>
+            
+        </div>
+		<div id="my-gui-container"></div>
+		
+        <script src="../public/javascripts/three.min.js"></script>
+
+        <script src="../public/javascripts/TrackballControls.js"></script>
+        <script src="../public/javascripts/SkyShader.js"></script>
+        <script src="../public/javascripts/tween.min.js"></script>
+        <script src="../public/javascripts/Detector.js"></script>
+        <script src="../public/javascripts/stats.min.js"></script>
+        <script src="../public/javascripts/dat.gui.min.js"></script>
+		<script src="../public/javascripts/addSourceForm.js"></script>
+        <script src="../public/javascripts/objects/BalancedParticle.js"></script>
+        <script src="../public/javascripts/objects/BalancedNode.js"></script>
+        <script src="../public/javascripts/objects/Arc.js"></script>
+
+		<!-- SKY custom shaders -->
+		<script type="application/x-glsl" id="sky-vertex">
+			varying vec2 vUV;
+
+			void main() {
+			  vUV = uv;
+			  vec4 pos = vec4(position, 1.0);
+			  gl_Position = projectionMatrix * modelViewMatrix * pos;
+			}
+		</script>
+
+		<script type="application/x-glsl" id="sky-fragment">
+			uniform sampler2D texture;
+			varying vec2 vUV;
+
+			void main() {
+			  vec4 sample = texture2D(texture, vUV);
+			  gl_FragColor = vec4(sample.xyz, sample.w);
+			}
+		</script>
+		<!-- ---------------- Custom Shader Code ------------------------ -->
+        <script id="vertexShader" type="x-shader/x-vertex">
+			uniform vec3 viewVector;
+			uniform float c;
+			uniform float p;
+			varying float intensity;
+			void main() 
+			{
+				vec3 vNormal = normalize( normalMatrix * normal );
+				vec3 vNormel = normalize( normalMatrix * viewVector );
+				intensity = pow( c - dot(vNormal, vNormel), p );
+
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+			}
+        </script>
+
+        <!-- fragment shader a.k.a. pixel shader -->
+        <script id="fragmentShader" type="x-shader/x-vertex"> 
+			uniform vec3 glowColor;
+			varying float intensity;
+			void main() 
+			{
+				vec3 glow = glowColor * intensity;
+				gl_FragColor = vec4( glow, 1.0 );
+			}
+        </script>
+		
+        <script src="../public/javascripts/viewer.js"></script>
+    </body>
+</html>

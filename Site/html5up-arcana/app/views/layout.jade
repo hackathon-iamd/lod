@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title League of Data
+
+    script(src='/javascripts/sockets.io.js')
+
+    script.
+        var socket = io();
+
+        socket.on('graph', function (graph) {
+            # TODO
+            console.log(JSON.parse(graph))
+        });
+
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    block content

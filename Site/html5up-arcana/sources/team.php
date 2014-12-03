@@ -6,8 +6,8 @@
 					
 							<article>
 								<header>
-									<h2>The development team</h2>
-									<p>For your visualisation</p>
+									<h2>L'équipe LoD</h2>
+									<p>Dans toute sa splandeur</p>
 								</header>
 								
 								<span class="image featured"><img src="images/IMG_8477.jpg" alt="" /></span>
