@@ -10,7 +10,7 @@
 									<p>Ecole d'ingénierie informatique</p>
 								</header>
 								
-								<span class="image person"><img src="images/tn.png" alt="" /></span>
+								<span class="image featured"><img src="images/tn.png" alt="" /></span>
 								
 								<!-- <p>Visualization</p> -->
 								

@@ -10,7 +10,7 @@
 									<p>Concours</p>
 								</header>
 								
-								<span class="image person"><img src="images/dataconnexion_logo.png" alt="" /></span>
+								<span class="image featured"><img src="images/dataconnexion_logo.png" alt="" /></span>
 								
 								<!-- <p>Visualization</p> -->
 								

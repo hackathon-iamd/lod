@@ -10,7 +10,7 @@
 									<p>Laboratoire de recherche</p>
 								</header>
 								
-								<span class="image person"><img src="images/inria_logo.jpg" alt="" /></span>
+								<span class="image featured"><img src="images/inria_logo.jpg" alt="" /></span>
 								
 								<!-- <p>Visualization</p> -->
 								

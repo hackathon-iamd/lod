@@ -10,7 +10,7 @@
 									<p>Nous avons beaucoup appris durant ce hackathon</p>
 								</header>
 								
-								<span class="image person"><img src="images/apprentissage.jpg" alt="" /></span>
+								<span class="image featured"><img src="images/apprentissage.jpg" alt="" /></span>
 
 								<p><br/></p>
 								

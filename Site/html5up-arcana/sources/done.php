@@ -10,7 +10,7 @@
 									<p>Visualisation and web site</p>
 								</header>
 								
-								<span class="image person"><img src="images/ourwork1.png" alt="" /></span>
+								<span class="image featured"><img src="images/screen.jpg" alt="" /></span>
 
 								<p><br/></p>
 								

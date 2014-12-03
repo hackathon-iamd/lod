@@ -10,7 +10,7 @@
 									<p>Elève-ingénieure à TELECOM Nancy en 3ème année avec approfondissement IAMD</p>
 								</header>
 								
-								<span class="image person"><img src="images/IMG_8506.jpg" alt="" /></span>
+								<span class="image featured"><img src="images/IMG_8506.jpg" alt="" /></span>
 								
 								<p>Database management (OrientDB) and web-develoment</p>
 								

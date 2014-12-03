@@ -17,7 +17,7 @@
 									<a href="index.php?action=aw">Alexandre WEILER</a> 
 									et <a href="index.php?action=ol">Ondine LAMY</a></p>
 								
-								<h3>Few words</h3>
+								<h3>Quelques mots</h3>
 								<p>
 									L'équipe League of Data est composé de quatre élèves ingénieurs de troisième année, 
 									en approfondissement IAMD à TELECOM Nancy. Ces élèves sont Jonathan ARNAULT, 

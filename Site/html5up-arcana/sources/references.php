@@ -10,7 +10,7 @@
 									<p>Ces projets nous ont inspiré, mais pourquoi ?</p>
 								</header>
 								
-								<span class="image person"><img src="images/references.jpg" alt="" /></span>
+								<span class="image featured"><img src="images/references.jpg" alt="" /></span>
 
 								<p>Si notre projet vous a plu, allez donc regarder ces projets aussi ;)</p>
 								

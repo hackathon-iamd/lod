@@ -10,7 +10,7 @@
 									<p>Banque</p>
 								</header>
 								
-								<span class="image person"><img src="images/ca_logo_couleur_redim.png" alt="" /></span>
+								<span class="image featured"><img src="images/ca_logo_couleur_redim.png" alt="" /></span>
 								
 								<!-- <p>Visualization</p> -->
 								

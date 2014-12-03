@@ -10,7 +10,7 @@
 									<p>Cartographie navigable de données ouvertes liées biomédicales</p>
 								</header>
 								
-								<span class="image person"><img src="images/numerical_brain.jpg" alt="" /></span>
+								<span class="image featured"><img src="images/numerical_brain.jpg" alt="" /></span>
 								
 								<p>Le sujet a été proposé par Adrien COULET, enseignant à TELECOM Nancy et chercheur au Loria.</p>
 								
@@ -24,7 +24,7 @@
 								<p>
 									Voici un exemple de visualisation sur le site de <a href="http://lod-cloud.net/">Linking Open Data</a>.
 								</p>
-								<span class="image person"><img src="images/lod-cloud.png" alt="" /></span>
+								<span class="image featured"><img src="images/lod-cloud.png" alt="" /></span>
 							</article>
 				
 					</div>

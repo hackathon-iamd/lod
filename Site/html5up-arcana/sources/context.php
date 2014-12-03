@@ -10,7 +10,7 @@
 									<p>Hackathon IAMD novembre 2014</p>
 								</header>
 								
-								<span class="image person"><img src="images/hackathon.png" alt="" /></span>
+								<span class="image featured"><img src="images/hackathon.png" alt="" /></span>
 								
 								<p>Durant 5 jours 5 équipes ont travaillé sur leur sujet. Le but : présenter leur travaille et une maquette de leur projet.</p>
 								

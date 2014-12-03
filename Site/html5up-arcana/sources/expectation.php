@@ -10,7 +10,7 @@
 									<p>We had sweet dreams</p>
 								</header>
 								
-								<span class="image person"><img src="images/background3.jpg" alt="" /></span>
+								<span class="image featured"><img src="images/background3.jpg" alt="" /></span>
 								
 								<p>CNN Ecosphere est un projet de visualisation des tweets</p>
 								

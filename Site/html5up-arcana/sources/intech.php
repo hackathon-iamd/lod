@@ -10,7 +10,7 @@
 									<p>Conseil et Expertise en Technologies et Systèmes d'Information</p>
 								</header>
 								
-								<span class="image person"><img src="images/intech_logo.png" alt="" /></span>
+								<span class="image featured"><img src="images/intech_logo.png" alt="" /></span>
 								
 								<!-- <p>Visualization</p> -->
 								
