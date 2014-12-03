@@ -10,7 +10,7 @@
 									<p>Elève-ingénieur à TELECOM Nancy en 3ème année avec approfondissement IAMD</p>
 								</header>
 								
-								<span class="image featured"><img src="images/P1090363.JPG" alt="" /></span>
+								<span class="image person"><img src="images/P1090363.JPG" alt="" /></span>
 								
 								<p>Visualization</p>
 								

@@ -301,14 +301,21 @@
 			margin: 0 0 2em 0;
 		}
 
-			.image.featured img {
-				display: block;
-				width: 100%;
-			}
+		.image.featured img {
+			display: block;
+			width: 50%;
+			margin:auto;
+		}
 
-			.image.person img {
-				display: block;
-			}
+		.image.person {
+			display: block;
+			margin: 0 0 2em 0;
+		}
+		
+		.image.person img {
+			display: block;
+			width: 15%;
+		}
 
 		.image.screen {
 		display: block;

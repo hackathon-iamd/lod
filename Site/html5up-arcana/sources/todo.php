@@ -10,7 +10,7 @@
 									<p>Le temps est un bien précieux</p>
 								</header>
 								
-								<span class="image person"><img src="images/time.jpg" alt="" /></span>
+								<span class="image featured"><img src="images/time.jpg" alt="" /></span>
 
 								<p><br/></p>
 								

@@ -42,6 +42,26 @@
 			font-size: 1em;
 		}
 
+/* images */
+.image.featured {
+	display: block;
+	margin: 0 0 2em 0;
+}
+
+.image.featured img {
+	display: block;
+	width: 100%;
+}
+
+.image.person {
+	display: block;
+	margin: 0 0 2em 0;
+}
+.image.person img {
+	display: block;
+	width: 80%;
+	margin:auto;
+}
 /* Lists */
 
 	ul.menu li {

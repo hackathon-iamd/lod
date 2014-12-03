@@ -10,7 +10,7 @@
 									<p>Dans toute sa splandeur</p>
 								</header>
 								
-								<span class="image featured"><img src="images/IMG_8477.jpg" alt="" /></span>
+								<span class="image fit"><img src="images/IMG_8477.jpg" alt="" /></span>
 								
 								<p>De gauche à droite : <a href="index.php?action=ja">Jonathan ARNAULT</a>, 
 									<a href="index.php?action=mb">Mathieu BUCHHEIT</a>, 
