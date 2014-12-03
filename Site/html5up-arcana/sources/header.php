@@ -41,24 +41,24 @@
 							<li <?php echo ($_GET['action'] == "accueil" ? "class=\"current\"" : "");?>><a href="index.php">Home</a></li>
 <?php
 	$pages = array(
-		"Project" => array(
-			"context" => "Context",
-			"subject" => "Subject",
-			"expectation" => "Expectation",
-			"done" => "Done",
-			"todo" => "To do",
-			"references" => "References",
+		"Projet" => array(
+			"context" => "Contexte",
+			"subject" => "Sujet",
+			"expectation" => "Attentes",
+			"done" => "Travail réalisé",
+			"todo" => "A faire",
+			"references" => "Références",
 			"conclusion" => "Conclusion"
 
 		), 
-		"Team" => array(
-			"team" => "The team",
+		"Équipe" => array(
+			"team" => "L'équipe",
 			"ja" => "Jonathan ARNAULT",
 			"mb" => "Mathieu BUCHHEIT",
 			"ol" => "Ondine LAMY",
 			"aw" => "Alexandre WEILER"
 		),
-		"Partners" => array(
+		"Partenaires" => array(
 			"tn" => "TELECOM Nancy",
 			"ca" => "Crédit Agricole S.A.",
 			"intech" => "In Tech",
@@ -70,9 +70,10 @@
 	);
 
 	foreach ($pages as $categorie => $contenu) {
+		$first = key($contenu);
 		echo "
 							<li ".(array_key_exists($_GET['action'], $contenu) ? " class=\"current\"" : "").">
-								<a href=\"#\">{$categorie}</a>
+								<a href=\"index.php?action={$first}\">{$categorie}</a>
 								<ul>";
 		foreach($contenu as $page => $nom){
 			echo "

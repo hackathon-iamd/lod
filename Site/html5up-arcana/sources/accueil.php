@@ -12,14 +12,14 @@
 						<section class="4u 12u(2)">
 							<div class="box highlight">
 								<i class="icon major fa-paper-plane"></i>
-								<h3>In few words</h3>
+								<h3>En quelques mots</h3>
 								<p class="pindex">Visualisation des liens entre bases de données et entre leurs éléments.</p>
 							</div>
 						</section>
 						<section class="4u 12u(2)">
 							<div class="box highlight">
 								<i class="icon major fa-pencil"></i>
-								<h3>Some information</h3>
+								<h3>Quelques informations</h3>
 								<p class="pindex">
 									A TELECOM Nancy </br>
 									La semaine du 24-11-14 au 28-11-14
@@ -29,7 +29,7 @@
 						<section class="4u 12u(2)">
 							<div class="box highlight">
 								<i class="icon major fa-wrench"></i>
-								<h3>Development team</h3>
+								<h3>L'équipe</h3>
 								<p class="pindex">
 									Jonathan ARNAULT <br/>
 									Mathieu BUCHHEIT <br/>
