@@ -77,6 +77,22 @@
 	#banner {
 		height: 18em;
 	}
+	
+/* footer*/
+#footer .container {
+	margin-bottom: 0;
+	margin-right: 10px;
+	margin-left: auto;
+	width: 65%;
+	text-align: center;
+}
+
+#footer .row section {
+	margin-right: 15%;
+	margin-left: 15%;
+	margin:auto;
+	padding:20px;
+}
 
 /* Wrapper */
 
