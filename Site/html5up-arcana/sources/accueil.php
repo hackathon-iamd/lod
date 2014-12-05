@@ -26,7 +26,7 @@
 				<div class="box highlight">
 					<i class="icon major fa-paper-plane"></i>
 					<h3>En quelques mots</h3>
-					<p class="pindex">Visualisation des liens entre les bases des Linked Open data.</p>
+					<p class="pindex">Visualisation des liens entre</br> les bases des Linked Open data.</p>
 				</div>
 			</section>
 			<section class="4u 12u(2)">

@@ -104,3 +104,13 @@
 	.wrapper {
 		padding: 2em 0 1px 0;
 	}
+	
+/* Box */
+
+.box.highlight {
+	padding-left:0px;
+	text-align: center;
+}
+section.4u{
+	padding:auto;
+}

@@ -41,7 +41,9 @@
 /* Box */
 
 	.box.highlight {
-		padding-left: calc(4em + 30px);
+		padding-left: calc(4em + 15px);
+		margin-right:0px;
+		width:90%;
 	}
 
 	.box.post .inner {
