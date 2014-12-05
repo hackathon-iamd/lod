@@ -15,21 +15,19 @@
 								<!-- <p>Visualization</p> -->
 								
 								<h3><br/>What about it ?</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus 
-								justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis, 
-								ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet 
-								vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor. 
-								Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis 
-								rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien. 
-								Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi. 
-								Phasellus sed nisl vitae risus tristique volutpat. Cras rutrum commodo luctus.</p>
-
-								<p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim 
-								quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu. 
-								Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna, 
-								fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium. 
-								Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu. 
-								Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
+								<p>
+									Etablissement public de recherche à caractère scientifique et technologique 
+									(EPST) sous la double tutelle des ministères en charge de la Recherche et de 
+									l’Industrie, Inria, créé en 1967, a pour missions de produire une recherche 
+									d’excellence dans les champs informatiques et mathématiques des sciences du 
+									numérique et de garantir l’impact de cette recherche. Inria couvre l’ensemble 
+									du spectre des recherches au coeur de ces domaines d’activités, et intervient 
+									sur les questions, en lien avec le numérique, posées par les autres sciences 
+									et par les acteurs économiques et sociétaux. <br/>
+									<br/>
+									Description prise sur <a href="http://www.inria.fr/institut/inria-en-bref/
+									inria-en-quelques-mots">leur site</a>.
+								</p>
 								<p>Their <a href="http://www.inria.fr/">web site</a>.</p>
 							</article>
 				
