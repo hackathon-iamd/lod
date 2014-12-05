@@ -14,7 +14,7 @@
 								
 								<p>Visualization</p>
 								
-								<h3>What about him ?</h3>
+								<h3>À propos de moi ?</h3>
 								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus 
 								justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis, 
 								ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet 
@@ -30,8 +30,8 @@
 								fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium. 
 								Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu. 
 								Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
-								<p>He's on <a href="http://fr.linkedin.com/in/alexandreweiler">linkedin</a>.</p>
-								<p class="return">Retour to the <a href="index.php?action=team">team</a>.</p>
+								<p>Je suis sur <a href="http://fr.linkedin.com/in/alexandreweiler">linkedin</a>.</p>
+								<p class="return">Retour vers l'<a href="index.php?action=team">équipe</a>.</p>
 							</article>
 				
 					</div>

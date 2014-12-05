@@ -6,7 +6,7 @@
 					
 							<article>
 								<header>
-									<h2>Subject</h2>
+									<h2>Sujet</h2>
 									<p>Cartographie navigable de données ouvertes liées biomédicales</p>
 								</header>
 								
@@ -14,7 +14,7 @@
 								
 								<p>Le sujet a été proposé par Adrien COULET, enseignant à TELECOM Nancy et chercheur au Loria.</p>
 								
-								<h3>So the subject</h3>
+								<h3>Quelques précisions</h3>
 								<p>
 									Le but est de visualiser les liens entre des bases de données et entre leurs données. 
 									De telles visualisations existent déjà, ce qui nous a été demandé c'est d'améliorer 
@@ -24,7 +24,7 @@
 								<p>
 									Voici un exemple de visualisation sur le site de <a href="http://lod-cloud.net/">Linking Open Data</a>.
 								</p>
-								<span class="image featured"><img src="images/lod-cloud.png" alt="" /></span>
+								<span class="image fit"><img src="images/lod-cloud.png" alt="" /></span>
 							</article>
 				
 					</div>

@@ -6,15 +6,15 @@
 					
 							<article>
 								<header>
-									<h2>Expectation</h2>
-									<p>We had sweet dreams</p>
+									<h2>Attentes</h2>
+									<p>Nous avons de grosses ambitions</p>
 								</header>
 								
 								<span class="image featured"><img src="images/background3.jpg" alt="" /></span>
 								
 								<p>CNN Ecosphere est un projet de visualisation des tweets</p>
 								
-								<h3>Our dreams</h3>
+								<h3>Notre objectif</h3>
 								<p>
 									Nous avons commencé par regarder ce qui se faisait en visualisation de liens entre 
 									données. Nous avons alors remarqué que la visualisation 3D avez en général un 

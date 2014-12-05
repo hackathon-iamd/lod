@@ -6,15 +6,15 @@
 					
 							<article>
 								<header>
-									<h2>Done</h2>
-									<p>Visualisation and web site</p>
+									<h2>Travail réalisé</h2>
+									<p>Visualisation et site web</p>
 								</header>
 								
-								<span class="image featured"><img src="images/screen.jpg" alt="" /></span>
+								<span class="image featured"><a href="app/views/"><img src="images/screen.jpg" alt="" /></a></span>
 
 								<p><br/></p>
 								
-								<h3>The visualisation (frontend)</h3>
+								<h3>La visualisation (frontend)</h3>
 								<p>
 									Comme prévu, à l'arrivée l'utilisateur voit les liens entre bases de données, 
 									une base de donnée étant représentée par une planète. Ensuite il peut cliquer 
@@ -25,20 +25,20 @@
 									nouveau la planète base de données.
 								</p>
 
-								<h3>The visualisation (backend)</h3>
+								<h3>La visualisation (backend)</h3>
 								<p>
 									Les informations sont récoltées dans les sites puis sont stockées dans une base de 
 									données OrientDB. Des requêtes sparql permettent de récupérer ces informations pour 
 									la visualisation.
 								</p>
 
-								<h3>The web site</h3>
+								<h3>Le site web</h3>
 								<p>
 									Par manque de temps, nous n'avons pas entièrement codé le site à la main. La base a 
 									été prise sur le site HTML5UP (modèle Arcana). Nous avons modifié le code pour 
 									l'adapter à notre projet. Le site est codé en HTML et CSS, avec des ajouts de PHP.
 								</p>
-								<h3>Finally</h3>
+								<h3>Finallement</h3>
 								<p>
 									<ul>
 										Donc de ce que nous avions prévu nous avons fait ce qui est en vert :

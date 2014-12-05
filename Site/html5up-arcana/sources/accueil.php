@@ -9,7 +9,7 @@
  <section class="wrapper style2">
 	<div class="container">
 		<header class="major">
-			<h2>T<em>eam</em> L<em>oD</em> D<em>ata</em> V<em>iewer</em></h2>
+			<h2>T<em>eam</em> L<em>oD</em> - D<em>ata</em> V<em>iewer</em></h2>
 			<p class="pindex">Testez notre application:</p>				
 			<span class="image screen">
 				<a href="app/views/"><img src="images/screen.jpg" alt="" /></a>

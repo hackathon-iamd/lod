@@ -29,12 +29,11 @@
 								
 								<h3>Mathieu BUCHHEIT</h3>
 								<p>
-									"Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent 
-									quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus 
-									Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. 
-									fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla 
-									Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae 
-									Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus."
+									"Je me suis beaucoup amusé lors de ce hackathon, j'ai aussi pu découvrir beaucoup du 
+									potentiel de la bibliothèque TRHEE.js et du développement web en général. Cela à été pour moi une
+									expérience enrichissante puisque cela m'a permit de travailler au sein d'une équipe
+									diversifié dont les spécialité se complétais. J'ai aussi eu la chance de voir des projets concrets
+									grâce aux visites effectuées par les collaborateurs."
 								</p>
 								
 								<h3>Ondine LAMY</h3>

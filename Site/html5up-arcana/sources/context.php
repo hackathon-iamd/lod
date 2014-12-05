@@ -6,7 +6,7 @@
 					
 							<article>
 								<header>
-									<h2>Context</h2>
+									<h2>Contexte</h2>
 									<p>Hackathon IAMD novembre 2014</p>
 								</header>
 								
@@ -14,7 +14,7 @@
 								
 								<p>Durant 5 jours 5 équipes ont travaillé sur leur sujet. Le but : présenter leur travaille et une maquette de leur projet.</p>
 								
-								<h3>Where were we and why?</h3>
+								<h3>Qui sommes nous et pourquoi ce sujet?</h3>
 								<p>
 									Dans le cadre des études à TELECOM Nancy, les troisième années de cette école ont une 
 									semaine dite bloquée. Durant cette semaine, chaque approfondissement à des activités

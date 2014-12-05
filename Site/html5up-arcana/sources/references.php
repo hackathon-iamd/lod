@@ -6,7 +6,7 @@
 					
 							<article>
 								<header>
-									<h2>References</h2>
+									<h2>Références</h2>
 									<p>Ces projets nous ont inspiré, mais pourquoi ?</p>
 								</header>
 								

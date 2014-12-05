@@ -4,7 +4,7 @@
 					<div class="row">
 						<!-- <section class="3u 6u(2) 12u$(3)"> -->
 						<section>
-							<h3>Partners</h3>
+							<h3>Partenaires</h3>
 							<ul class="links">
 								<li><a href="http://www.telecomnancy.eu/">TELECOM Nancy</a></li>
 								<li><a href="http://www.credit-agricole.com/Investisseur-et-actionnaire/Credit-Agricole-S.A">Crédit Agricole S.A.</a></li>
@@ -72,7 +72,7 @@
 			<!-- Copyright -->
 				<div class="copyright">
 					<ul class="menu">
-						<li>&copy; LoD. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a>, modified by <a href="http://fr.linkedin.com/in/ondinelamy/">Ondine LAMY</a></li>
+						<li>&copy; LoD. Tout droits réservés</li><li>Design: <a href="http://html5up.net">HTML5 UP</a>, modifié par <a href="http://fr.linkedin.com/in/ondinelamy/">Ondine LAMY</a> ( et Mathieu BUCHHEIT :D)</li>
 					</ul>
 				</div>
 

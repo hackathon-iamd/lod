@@ -38,7 +38,7 @@
 				<!-- Nav -->
 					<nav id="nav">
 						<ul>
-							<li <?php echo ($_GET['action'] == "accueil" ? "class=\"current\"" : "");?>><a href="index.php">Home</a></li>
+							<li <?php echo ($_GET['action'] == "accueil" ? "class=\"current\"" : "");?>><a href="index.php">Accueil</a></li>
 <?php
 	$pages = array(
 		"Projet" => array(

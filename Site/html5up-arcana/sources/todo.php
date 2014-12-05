@@ -6,7 +6,7 @@
 					
 							<article>
 								<header>
-									<h2>To do</h2>
+									<h2>A faire</h2>
 									<p>Le temps est un bien précieux</p>
 								</header>
 								
@@ -14,7 +14,7 @@
 
 								<p><br/></p>
 								
-								<h3>What it could be improved or made</h3>
+								<h3>Qu'est ce qui pourrai être amélioré ?</h3>
 								<p>
 									<ul>
 										Ce qu'il nous reste à faire, en rouge :
@@ -32,13 +32,15 @@
 										<li class="ulprojectToDo">Visibilité des données et des liens sur davantage que 
 											trois niveaux (sources-types-données)</li>
 									</ul>
-									<ul>
+									<!--<ul>
 										Dans ce que nous avions rajouté, en orange ce qui a été commencé mais non fini :
 										<li class="ulprojectAVal">Compléter les textes du sites</li>
 										<li class="ulprojectToDo">Mettre le site en ligne</li>
+										</ul>-->
+
 								</p>
 
-								<h3>Annotary</h3>
+								<h3>Note</h3>
 								<p>
 									Nous nous sommes rendu compte que les bases peuvent être complexes et contenir 
 									beaucoup d'"étages". C'est pour cela que pour un premier temps nous nous sommes 

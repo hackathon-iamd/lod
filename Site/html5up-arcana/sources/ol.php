@@ -14,7 +14,7 @@
 								
 								<p>Database management (OrientDB) and web-develoment</p>
 								
-								<h3>What about her ?</h3>
+								<h3>À propos de moi ?</h3>
 								<p>
 									"Après un baccalauréat S je suis allée en classe préparatoire MPSI (Maths-Physique 
 									et sciences de l'ingénieur) puis MP au Centre International de Valbonne à Sophia 
@@ -32,8 +32,8 @@
 									à <a href="http://www.animest.net/">Anim'Est</a> 2013 et trésorière au bureau des élèves du 
 									<a href="http://www.ceten.fr/">CETEN</a> en 2014. "
 								</p>
-								<p>She's on <a href="http://fr.linkedin.com/in/ondinelamy/">linkedin</a>.</p>
-								<p class="return">Retour to the <a href="index.php?action=team">team</a>.</p>
+								<p>Je suis sur <a href="http://fr.linkedin.com/in/ondinelamy/">linkedin</a>.</p>
+								<p class="return">Retour vers l'<a href="index.php?action=team">équipe</a>.</p>
 							</article>
 				
 					</div>
