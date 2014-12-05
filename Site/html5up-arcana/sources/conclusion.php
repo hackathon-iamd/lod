@@ -12,7 +12,8 @@
 								
 								<span class="image featured"><img src="images/apprentissage.jpg" alt="" /></span>
 
-								<p><br/></p>
+								<p>Nous avons gagné le prix de l'innovation : un drone offert à chacun par In Tech, 
+									d'une valeur totale de 600euros.</p>
 								
 								<h3>Jonathan ARNAULT</h3>
 								<p>

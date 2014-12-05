@@ -15,21 +15,23 @@
 								<!-- <p>Visualization</p> -->
 								
 								<h3><br/>What about it ?</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus 
-								justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis, 
-								ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet 
-								vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor. 
-								Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis 
-								rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien. 
-								Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi. 
-								Phasellus sed nisl vitae risus tristique volutpat. Cras rutrum commodo luctus.</p>
-
-								<p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim 
-								quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu. 
-								Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna, 
-								fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium. 
-								Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu. 
-								Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
+								<p>Fondée en 1995 au Luxembourg, InTech compte aujourd’hui 78 collaborateurs spécialisés 
+									dans la conception et la réalisation de solutions métiers construites à partir de 
+									composants industriels fondés sur les Nouvelles Technologies de l’Information. <br/>
+									InTech est positionnée sur le segment des Grands Comptes. Société à dimension humaine, 
+									nous avons choisi de conjuguer des savoir-faire métier et technologiques, dans les 
+									secteurs des services financiers, de l’industrie, des administrations luxembourgeoises, 
+									des services et de la santé. <br/>
+									InTech travaille essentiellement en mode projet, en associant des compétences 
+									pluridisciplinaires de Management projet, de conseil en architectures, d’expertise 
+									technique et de développement. <br/>
+									A l'écoute de l'évolution de votre métier, nous construisons ensemble la juste réponse 
+									à vos enjeux. <br/>
+									InTech est à vos côtés pour vous accompagner, vous guider, en construisant des 
+									Solutions Informatiques éprouvées, ouvertes et adaptées à vos spécificités. <br/>
+									<br/>
+									Description prise sur <a href="http://www.intech.lu/fr/about">leur site</a>.
+								</p>
 								<p>Their <a href="http://www.intech.lu/">web site</a>.</p>
 							</article>
 				
